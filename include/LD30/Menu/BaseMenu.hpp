@@ -12,7 +12,7 @@ namespace ld
     {
     public:
 
-        BaseMenu();
+        BaseMenu(sf::RenderWindow& window);
 
         virtual ~BaseMenu() = 0;
 
@@ -23,17 +23,22 @@ namespace ld
 
         void offsetDelta(const float d);
 
-        virtual bool fadeInStep(const float delta);
+        virtual void fadeInStep(const float delta);
 
-        virtual bool fadeOutStep(const float delta);
+        virtual void fadeOutStep(const float delta);
 
         virtual void update(const float delta) = 0;
 
-        virtual void draw(sf::RenderWindow& window) = 0;
+        virtual void draw() = 0;
 
 
     private:
 
         float m_delta;
+
+
+    protected:
+
+        sf::RenderWindow* m_window;
     };
 }

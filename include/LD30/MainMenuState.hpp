@@ -13,7 +13,7 @@ namespace ld
     {
     public:
 
-        MainMenuState();
+        MainMenuState(sf::RenderWindow& window);
 
         ~MainMenuState() final override;
 
@@ -22,7 +22,7 @@ namespace ld
 
         void update(const float delta) final override;
 
-        void draw(sf::RenderWindow& window) final override;
+        void draw() final override;
 
 
     private:

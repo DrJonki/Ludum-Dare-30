@@ -51,6 +51,12 @@
     <ClCompile Include="..\..\src\LD30\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\LD30\Menu\Button.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\LD30\Menu\Element.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\LD30\Settings.hpp">
@@ -79,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\LD30\MainMenuState.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LD30\Menu\Button.hpp">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LD30\Menu\Element.hpp">
+      <Filter>Header Files\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
