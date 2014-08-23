@@ -7,6 +7,8 @@ namespace ld
 {
     class PlayMenu : public BaseMenu
     {
+    public:
+
         PlayMenu(sf::RenderWindow& window);
 
         ~PlayMenu() final override;
