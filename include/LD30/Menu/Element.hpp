@@ -8,24 +8,22 @@ namespace sf
 
 namespace ld
 {
-    class GameState
+    class Element
     {
     public:
 
-        GameState(sf::RenderWindow& window);
+        Element(sf::RenderWindow& window);
 
-        virtual ~GameState() = 0;
+        virtual ~Element() = 0;
 
-
-        virtual bool init() = 0;
 
         virtual void update(const float delta) = 0;
 
         virtual void draw() = 0;
 
-
     protected:
 
         sf::RenderWindow* m_window;
+
     };
 }

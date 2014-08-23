@@ -1,4 +1,5 @@
 #include <LD30/Menu/BaseMenu.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 
 namespace ld
@@ -7,17 +8,22 @@ namespace ld
     {
     public:
 
-        MainMenu();
+        MainMenu(sf::RenderWindow& window);
 
         ~MainMenu() final override;
 
-        bool fadeInStep(const float delta) final override;
 
-        bool fadeOutStep(const float delta) final override;
+        void fadeInStep(const float delta) final override;
 
+        void fadeOutStep(const float delta) final override;
 
         void update(const float delta) final override;
 
-        void draw(sf::RenderWindow& window) final override;
+        void draw() final override;
+
+
+    private:
+
+        sf::RectangleShape m_backgroundShade;
     };
 }

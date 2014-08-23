@@ -1,7 +1,8 @@
 #include <LD30/Menu/PlayMenu.hpp>
 
 
-ld::PlayMenu::PlayMenu()
+ld::PlayMenu::PlayMenu(sf::RenderWindow& window)
+    : BaseMenu(window)
 {
 
 }
@@ -11,24 +12,14 @@ ld::PlayMenu::~PlayMenu()
 
 }
 
-bool ld::PlayMenu::fadeInStep(const float delta)
+void ld::PlayMenu::fadeInStep(const float delta)
 {
-    if (BaseMenu::fadeInStep(delta))
-        return true;
-
-
-
-    return false;
+    BaseMenu::fadeInStep(delta);
 }
 
-bool ld::PlayMenu::fadeOutStep(const float delta)
+void ld::PlayMenu::fadeOutStep(const float delta)
 {
-    if (BaseMenu::fadeOutStep(delta))
-        return true;
-
-
-
-    return false;
+    BaseMenu::fadeOutStep(delta);
 }
 
 void ld::PlayMenu::update(const float)
@@ -36,7 +27,7 @@ void ld::PlayMenu::update(const float)
 
 }
 
-void ld::PlayMenu::draw(sf::RenderWindow&)
+void ld::PlayMenu::draw()
 {
 
 }

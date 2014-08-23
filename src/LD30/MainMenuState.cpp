@@ -3,8 +3,9 @@
 #include <LD30/Menu/PlayMenu.hpp>
 
 
-ld::MainMenuState::MainMenuState()
-    : m_menuState(Play)
+ld::MainMenuState::MainMenuState(sf::RenderWindow& window)
+    : GameState(window),
+      m_menuState(Play)
 {
 
 }
@@ -16,6 +17,11 @@ ld::MainMenuState::~MainMenuState()
 
 bool ld::MainMenuState::init()
 {
+    // Main menu
+    m_menus[Main].reset(new MainMenu(*m_window));
+
+
+
     return true;
 }
 
@@ -40,14 +46,14 @@ void ld::MainMenuState::update(const float delta)
     }
 }
 
-void ld::MainMenuState::draw(sf::RenderWindow& window)
+void ld::MainMenuState::draw()
 {
 
 
     for (auto& i : m_menus)
     {
         if (i)
-            i->draw(window);
+            i->draw();
     }
 }
 

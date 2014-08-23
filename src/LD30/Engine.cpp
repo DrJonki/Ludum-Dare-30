@@ -5,13 +5,24 @@
 
 namespace
 {
-    sf::RenderWindow* openWindow()
+    sf::RenderWindow* openWindow(sf::RenderWindow* ptr)
     {
         int x = ld::Settings::getInt("iResolutionX", 1024);
         int y = ld::Settings::getInt("iResolutionY", 600);
+        std::string title = ld::Settings::getString("sWindowTitle", "You haven't set the window title :(");
 
-        auto wndw = new sf::RenderWindow(sf::VideoMode(x, y),
-                                         ld::Settings::getString("sWindowTitle", "You haven't set the window title :("), sf::Style::Close);
+        sf::RenderWindow* wndw = nullptr;
+        if (!ptr)
+        {
+            wndw = new sf::RenderWindow(sf::VideoMode(x, y),
+                                        title, sf::Style::Close);
+        }
+        else
+        {
+            ptr->~RenderWindow();
+            wndw = new (ptr) sf::RenderWindow(sf::VideoMode(x, y),
+                                        title, sf::Style::Close);
+        }
 
         sf::Vector2f wsize(wndw->getSize());
         wndw->setView(sf::View(wsize / 2.f, sf::Vector2f(1920.f, 1080.f)));
@@ -47,9 +58,9 @@ bool ld::Engine::init()
 {
     ld::Settings::init(ld::Misc::getHomeDir("LD30") + "settings.json");
 
-    m_window.reset(openWindow());
+    m_window.reset(openWindow(nullptr));
     
-    m_currentState.reset(new MainMenuState());
+    m_currentState.reset(new MainMenuState(*m_window));
 
     return (m_window->isOpen() && m_currentState);
 }
@@ -72,7 +83,7 @@ bool ld::Engine::mainLoop()
 
         // Draw
         m_window->clear();
-        m_currentState->draw(*m_window);
+        m_currentState->draw();
         m_window->display();
 
         // Poll events

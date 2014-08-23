@@ -2,8 +2,9 @@
 #include <algorithm>
 
 
-ld::BaseMenu::BaseMenu()
-    : m_delta(0.f)
+ld::BaseMenu::BaseMenu(sf::RenderWindow& window)
+    : m_window(&window),
+      m_delta(0.f)
 {
 
 }
@@ -29,20 +30,12 @@ void ld::BaseMenu::offsetDelta(const float d)
     setDelta(m_delta + d);
 }
 
-bool ld::BaseMenu::fadeInStep(const float delta)
+void ld::BaseMenu::fadeInStep(const float delta)
 {
-    const auto oldDelta = m_delta;
-
     offsetDelta(delta);
-
-    return oldDelta >= 1.f;
 }
 
-bool ld::BaseMenu::fadeOutStep(const float delta)
+void ld::BaseMenu::fadeOutStep(const float delta)
 {
-    const auto oldDelta = m_delta;
-
     offsetDelta(-delta);
-
-    return oldDelta <= 0.f;
 }

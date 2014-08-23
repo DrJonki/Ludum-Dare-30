@@ -1,7 +1,10 @@
 #include <LD30/Menu/MainMenu.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 
-ld::MainMenu::MainMenu()
+ld::MainMenu::MainMenu(sf::RenderWindow& window)
+    : BaseMenu(window),
+      m_backgroundShade(window.getView().getSize())
 {
 
 }
@@ -11,24 +14,14 @@ ld::MainMenu::~MainMenu()
 
 }
 
-bool ld::MainMenu::fadeInStep(const float delta)
+void ld::MainMenu::fadeInStep(const float delta)
 {
-    if (BaseMenu::fadeInStep(delta))
-        return true;
-
-
-
-    return false;
+    BaseMenu::fadeInStep(delta);
 }
 
-bool ld::MainMenu::fadeOutStep(const float delta)
+void ld::MainMenu::fadeOutStep(const float delta)
 {
-    if (BaseMenu::fadeOutStep(delta))
-        return true;
-
-
-
-    return false;
+    BaseMenu::fadeOutStep(delta);
 }
 
 void ld::MainMenu::update(const float)
@@ -36,7 +29,7 @@ void ld::MainMenu::update(const float)
 
 }
 
-void ld::MainMenu::draw(sf::RenderWindow&)
+void ld::MainMenu::draw()
 {
-
+    m_window->draw(m_backgroundShade);
 }

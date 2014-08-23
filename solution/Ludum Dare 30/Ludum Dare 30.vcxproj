@@ -18,6 +18,8 @@
     <ClCompile Include="..\..\src\LD30\GameState.cpp" />
     <ClCompile Include="..\..\src\LD30\MainMenuState.cpp" />
     <ClCompile Include="..\..\src\LD30\Menu\BaseMenu.cpp" />
+    <ClCompile Include="..\..\src\LD30\Menu\Button.cpp" />
+    <ClCompile Include="..\..\src\LD30\Menu\Element.cpp" />
     <ClCompile Include="..\..\src\LD30\Menu\MainMenu.cpp" />
     <ClCompile Include="..\..\src\LD30\Menu\PlayMenu.cpp" />
     <ClCompile Include="..\..\src\LD30\Misc.cpp" />
@@ -33,6 +35,8 @@
     <ClInclude Include="..\..\include\LD30\GameState.hpp" />
     <ClInclude Include="..\..\include\LD30\MainMenuState.hpp" />
     <ClInclude Include="..\..\include\LD30\Menu\BaseMenu.hpp" />
+    <ClInclude Include="..\..\include\LD30\Menu\Button.hpp" />
+    <ClInclude Include="..\..\include\LD30\Menu\Element.hpp" />
     <ClInclude Include="..\..\include\LD30\Menu\MainMenu.hpp" />
     <ClInclude Include="..\..\include\LD30\Menu\PlayMenu.hpp" />
     <ClInclude Include="..\..\include\LD30\Misc.hpp" />
