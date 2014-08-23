@@ -92,6 +92,8 @@
 copy /Y "$(SolutionDir)..\extlibs\sfml\bin\sfml-system-d-2.dll" "$(SolutionDir)..\bin\$(Configuration)\sfml-system-d-2.dll"
 copy /Y "$(SolutionDir)..\extlibs\sfml\bin\sfml-graphics-d-2.dll" "$(SolutionDir)..\bin\$(Configuration)\sfml-graphics-d-2.dll"
 copy /Y "$(SolutionDir)..\extlibs\sfml\bin\sfml-audio-d-2.dll" "$(SolutionDir)..\bin\$(Configuration)\sfml-audio-d-2.dll"
+copy /Y "$(SolutionDir)..\extlibs\sfml\bin\libsndfile-1.dll" "$(SolutionDir)..\bin\$(Configuration)\libsndfile-1.dll"
+copy /Y "$(SolutionDir)..\extlibs\sfml\bin\openal32.dll" "$(SolutionDir)..\bin\$(Configuration)\openal32.dll"
 copy /Y "$(SolutionDir)..\extlibs\luajit\lib\lua5.1.dll" "$(SolutionDir)..\bin\$(Configuration)\lua5.1.dll"
 copy /Y "$(SolutionDir)..\extlibs\luabind\lib\luabindd.dll" "$(SolutionDir)..\bin\$(Configuration)\luabindd.dll"</Command>
     </PostBuildEvent>
@@ -122,6 +124,8 @@ copy /Y "$(SolutionDir)..\extlibs\luabind\lib\luabindd.dll" "$(SolutionDir)..\bi
 copy /Y "$(SolutionDir)..\extlibs\sfml\bin\sfml-system-2.dll" "$(SolutionDir)..\bin\$(Configuration)\sfml-system-2.dll"
 copy /Y "$(SolutionDir)..\extlibs\sfml\bin\sfml-graphics-2.dll" "$(SolutionDir)..\bin\$(Configuration)\sfml-graphics-2.dll"
 copy /Y "$(SolutionDir)..\extlibs\sfml\bin\sfml-audio-2.dll" "$(SolutionDir)..\bin\$(Configuration)\sfml-audio-2.dll"
+copy /Y "$(SolutionDir)..\extlibs\sfml\bin\libsndfile-1.dll" "$(SolutionDir)..\bin\$(Configuration)\libsndfile-1.dll"
+copy /Y "$(SolutionDir)..\extlibs\sfml\bin\openal32.dll" "$(SolutionDir)..\bin\$(Configuration)\openal32.dll"
 copy /Y "$(SolutionDir)..\extlibs\luajit\lib\lua5.1.dll" "$(SolutionDir)..\bin\$(Configuration)\lua5.1.dll"
 copy /Y "$(SolutionDir)..\extlibs\luabind\lib\luabind.dll" "$(SolutionDir)..\bin\$(Configuration)\luabind.dll"</Command>
     </PostBuildEvent>

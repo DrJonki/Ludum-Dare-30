@@ -23,16 +23,19 @@ void ld::MainMenuState::update(const float delta)
 {
     for (std::size_t i = 0; i < m_menus.size(); ++i)
     {
-        auto& menu = *m_menus[i];
-
-        if (i == static_cast<unsigned int>(m_menuState))
-            menu.fadeInStep(delta);
-        else
-            menu.fadeOutStep(delta);
-
-        if (menu.getDelta() > 0.f)
+        if (m_menus[i])
         {
-            menu.update(delta);
+            auto& menu = *m_menus[i];
+
+            if (i == static_cast<unsigned int>(m_menuState))
+                menu.fadeInStep(delta);
+            else
+                menu.fadeOutStep(delta);
+
+            if (menu.getDelta() > 0.f)
+            {
+                menu.update(delta);
+            }
         }
     }
 }
@@ -43,7 +46,8 @@ void ld::MainMenuState::draw(sf::RenderWindow& window)
 
     for (auto& i : m_menus)
     {
-        i->draw(window);
+        if (i)
+            i->draw(window);
     }
 }
 
