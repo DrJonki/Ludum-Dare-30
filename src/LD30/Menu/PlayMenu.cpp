@@ -13,20 +13,30 @@ ld::PlayMenu::~PlayMenu()
 
 bool ld::PlayMenu::fadeInStep(const float delta)
 {
+    if (BaseMenu::fadeInStep(delta))
+        return true;
 
+
+
+    return false;
 }
 
 bool ld::PlayMenu::fadeOutStep(const float delta)
 {
+    if (BaseMenu::fadeOutStep(delta))
+        return true;
 
+
+
+    return false;
 }
 
-void ld::PlayMenu::update(const float delta)
+void ld::PlayMenu::update(const float)
 {
 
 }
 
-void ld::PlayMenu::draw(sf::RenderWindow& window)
+void ld::PlayMenu::draw(sf::RenderWindow&)
 {
 
 }

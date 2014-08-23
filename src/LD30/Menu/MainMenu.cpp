@@ -17,6 +17,8 @@ bool ld::MainMenu::fadeInStep(const float delta)
         return true;
 
 
+
+    return false;
 }
 
 bool ld::MainMenu::fadeOutStep(const float delta)
@@ -25,14 +27,16 @@ bool ld::MainMenu::fadeOutStep(const float delta)
         return true;
 
 
+
+    return false;
 }
 
-void ld::MainMenu::update(const float delta)
+void ld::MainMenu::update(const float)
 {
 
 }
 
-void ld::MainMenu::draw(sf::RenderWindow& window)
+void ld::MainMenu::draw(sf::RenderWindow&)
 {
 
 }

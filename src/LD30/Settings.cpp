@@ -48,7 +48,6 @@ bool ld::Settings::getBool(const std::string& name, const bool defaultValue)
     else
     {
         ns_doc.AddMember(name.c_str(), defaultValue, ns_doc.GetAllocator());
-        //ns_doc[name.c_str()].SetBool(defaultValue);
     }
 
     return defaultValue;
@@ -63,7 +62,6 @@ int ld::Settings::getInt(const std::string& name, const int defaultValue)
     else
     {
         ns_doc.AddMember(name.c_str(), defaultValue, ns_doc.GetAllocator());
-        //ns_doc[name.c_str()].SetInt(defaultValue);
     }
 
     return defaultValue;
@@ -78,7 +76,6 @@ float ld::Settings::getFloat(const std::string& name, const float defaultValue)
     else
     {
         ns_doc.AddMember(name.c_str(), static_cast<const double>(defaultValue), ns_doc.GetAllocator());
-        //ns_doc[name.c_str()].SetDouble(static_cast<const double>(defaultValue));
     }
 
     return defaultValue;
@@ -93,7 +90,6 @@ std::string ld::Settings::getString(const std::string& name, const std::string& 
     else
     {
         ns_doc.AddMember(name.c_str(), defaultValue.c_str(), ns_doc.GetAllocator());
-        //ns_doc[name.c_str()].SetString(defaultValue.c_str());
     }
     
     return defaultValue;
