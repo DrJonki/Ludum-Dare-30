@@ -58,7 +58,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\extlibs\sfml\include;$(SolutionDir)..\extlibs\boost\include;$(SolutionDir)..\extlibs\luabind\include;$(SolutionDir)..\extlibs\luajit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\extlibs\sfml\include;$(SolutionDir)..\extlibs\boost\include;$(SolutionDir)..\extlibs\luabind\include;$(SolutionDir)..\extlibs\luajit\include;$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -86,7 +86,7 @@ copy /Y "$(SolutionDir)..\extlibs\luabind\lib\luabindd.dll" "$(SolutionDir)..\bi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\extlibs\sfml\include;$(SolutionDir)..\extlibs\boost\include;$(SolutionDir)..\extlibs\luabind\include;$(SolutionDir)..\extlibs\luajit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\extlibs\sfml\include;$(SolutionDir)..\extlibs\boost\include;$(SolutionDir)..\extlibs\luabind\include;$(SolutionDir)..\extlibs\luajit\include;$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
