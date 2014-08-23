@@ -1,24 +1,18 @@
 #include <SFML/Graphics.hpp>
+#include <LD30/Misc.hpp>
+#include <LD30/Settings.hpp>
+#include <cassert>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    ld::Settings::init(ld::Misc::getHomeDir("LD30") + "settings.json");
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    sf::RenderWindow window(sf::VideoMode(ld::Settings::getInt("iResolutionX", 1024), ld::Settings::getInt("iResolutionY", 600)),
+                            ld::Settings::getString("sWindowTitle", "You haven't set the window title :("));
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+
+
+    ld::Settings::writeSettings();
 
     return 0;
 }
