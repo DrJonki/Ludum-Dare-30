@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Menu">
+      <UniqueIdentifier>{6e9c7489-9e22-4a93-a8ec-c9f7f8ea5902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{d371f579-a0ed-4a0d-a1be-1e75802f5656}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -24,6 +30,15 @@
     <ClCompile Include="..\..\src\LD30\Misc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\LD30\Menu\BaseMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\LD30\Menu\MainMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\LD30\Menu\PlayMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\LD30\Settings.hpp">
@@ -31,6 +46,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\LD30\Misc.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LD30\Menu\BaseMenu.hpp">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LD30\Menu\MainMenu.hpp">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LD30\Menu\PlayMenu.hpp">
+      <Filter>Header Files\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

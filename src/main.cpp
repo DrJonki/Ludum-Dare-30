@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <LD30/Misc.hpp>
 #include <LD30/Settings.hpp>
-#include <cassert>
 
 int main()
 {

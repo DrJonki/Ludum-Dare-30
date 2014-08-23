@@ -11,11 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\LD30\Menu\BaseMenu.cpp" />
+    <ClCompile Include="..\..\src\LD30\Menu\MainMenu.cpp" />
+    <ClCompile Include="..\..\src\LD30\Menu\PlayMenu.cpp" />
     <ClCompile Include="..\..\src\LD30\Misc.cpp" />
     <ClCompile Include="..\..\src\LD30\Settings.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\LD30\Menu\BaseMenu.hpp" />
+    <ClInclude Include="..\..\include\LD30\Menu\MainMenu.hpp" />
+    <ClInclude Include="..\..\include\LD30\Menu\PlayMenu.hpp" />
     <ClInclude Include="..\..\include\LD30\Misc.hpp" />
     <ClInclude Include="..\..\include\LD30\Settings.hpp" />
   </ItemGroup>
