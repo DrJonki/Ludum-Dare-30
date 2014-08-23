@@ -2,9 +2,8 @@
 #include <LD30/Misc.hpp>
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/document.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/prettywriter.h>
 #include <fstream>
+#include <iostream>
 
 
 namespace rj = rapidjson;
@@ -47,9 +46,9 @@ bool ld::Settings::getBool(const std::string& name, const bool defaultValue)
         return value->GetBool();
     else
     {
-        ns_doc.AddMember(name.c_str(), defaultValue, ns_doc.GetAllocator());
+        ns_doc.AddMember(rj::StringRef(name.c_str()), defaultValue, ns_doc.GetAllocator());
     }
-
+    
     return defaultValue;
 }
 
@@ -61,7 +60,7 @@ int ld::Settings::getInt(const std::string& name, const int defaultValue)
         return value->GetInt();
     else
     {
-        ns_doc.AddMember(name.c_str(), defaultValue, ns_doc.GetAllocator());
+        ns_doc.AddMember(rj::StringRef(name.c_str()), defaultValue, ns_doc.GetAllocator());
     }
 
     return defaultValue;
@@ -75,7 +74,7 @@ float ld::Settings::getFloat(const std::string& name, const float defaultValue)
         return static_cast<float>(value->GetDouble());
     else
     {
-        ns_doc.AddMember(name.c_str(), static_cast<const double>(defaultValue), ns_doc.GetAllocator());
+        ns_doc.AddMember(rj::StringRef(name.c_str()), static_cast<const double>(defaultValue), ns_doc.GetAllocator());
     }
 
     return defaultValue;
@@ -89,7 +88,7 @@ std::string ld::Settings::getString(const std::string& name, const std::string& 
         return std::string(value->GetString());
     else
     {
-        ns_doc.AddMember(name.c_str(), defaultValue.c_str(), ns_doc.GetAllocator());
+        ns_doc.AddMember(rj::StringRef(name.c_str()), rj::StringRef(defaultValue.c_str()), ns_doc.GetAllocator());
     }
     
     return defaultValue;
@@ -100,18 +99,7 @@ bool ld::Settings::writeSettings()
     if (ns_file.empty())
         return false;
 
-    rj::StringBuffer buffer;
-    rj::PrettyWriter<rj::StringBuffer> writer(buffer);
-    ns_doc.Accept(writer);
     
-    std::ofstream stream(ns_file.c_str());
-
-    if (!stream)
-        return false;
-
-    stream << buffer.GetString();
-
-    stream.close();
 
     return true;
 }

@@ -3,7 +3,7 @@
 
 
 ld::BaseMenu::BaseMenu()
-    : m_delta(0)
+    : m_delta(0.f)
 {
 
 }

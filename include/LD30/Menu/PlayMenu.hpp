@@ -1,3 +1,5 @@
+#pragma once
+
 #include <LD30/Menu/BaseMenu.hpp>
 
 

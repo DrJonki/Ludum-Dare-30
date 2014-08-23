@@ -1,17 +1,7 @@
-#include <SFML/Graphics.hpp>
-#include <LD30/Misc.hpp>
-#include <LD30/Settings.hpp>
+#include <LD30/Engine.hpp>
+#include <SFML/Main.hpp>
 
-int main()
+bool main()
 {
-    ld::Settings::init(ld::Misc::getHomeDir("LD30") + "settings.json");
-
-    sf::RenderWindow window(sf::VideoMode(ld::Settings::getInt("iResolutionX", 1024), ld::Settings::getInt("iResolutionY", 600)),
-                            ld::Settings::getString("sWindowTitle", "You haven't set the window title :("));
-
-
-
-    ld::Settings::writeSettings();
-
-    return 0;
+    return (ld::Engine::getInstance().init() && ld::Engine::getInstance().mainLoop());
 }
