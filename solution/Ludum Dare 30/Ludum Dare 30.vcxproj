@@ -12,6 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\LD30\Engine.cpp" />
+    <ClCompile Include="..\..\src\LD30\Entity\Enemy.cpp" />
+    <ClCompile Include="..\..\src\LD30\Entity\Entity.cpp" />
+    <ClCompile Include="..\..\src\LD30\Entity\Player.cpp" />
     <ClCompile Include="..\..\src\LD30\GameState.cpp" />
     <ClCompile Include="..\..\src\LD30\MainMenuState.cpp" />
     <ClCompile Include="..\..\src\LD30\Menu\BaseMenu.cpp" />
@@ -24,6 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\LD30\Engine.hpp" />
+    <ClInclude Include="..\..\include\LD30\Entity\Enemy.hpp" />
+    <ClInclude Include="..\..\include\LD30\Entity\Entity.hpp" />
+    <ClInclude Include="..\..\include\LD30\Entity\Player.hpp" />
     <ClInclude Include="..\..\include\LD30\GameState.hpp" />
     <ClInclude Include="..\..\include\LD30\MainMenuState.hpp" />
     <ClInclude Include="..\..\include\LD30\Menu\BaseMenu.hpp" />
