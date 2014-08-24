@@ -33,22 +33,11 @@ void ld::Player::keyInput(const float delta)
 	sf::Vector2f temp;
 	const float speed = 50.f*delta;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		temp += sf::Vector2f(-speed, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		temp += sf::Vector2f(speed, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		temp += sf::Vector2f(0, -speed);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
-		temp += sf::Vector2f(0, speed);
-	}
+	temp += sf::Vector2f(
+		(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) -
+		sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) * speed, 
+		(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) -
+		sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) * speed);
 
 	m_direction += temp;
 }
