@@ -75,6 +75,9 @@
     <ClCompile Include="..\..\src\LD30\PlayState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\LD30\Entity\Animation.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\LD30\Settings.hpp">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\LD30\PlayState.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LD30\Entity\Animation.hpp">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

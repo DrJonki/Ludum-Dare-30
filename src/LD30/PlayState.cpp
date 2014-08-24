@@ -29,7 +29,9 @@ bool ld::PlayState::init()
 	m_player.m_shield.setTexture(tex);
 	m_player.m_shield.setSize(sf::Vector2f(128.f, 128.f));
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
-
+	
+	//Enemy
+	addEnemy();
 
 	return true;
 }
@@ -37,10 +39,38 @@ bool ld::PlayState::init()
 void ld::PlayState::update(const float delta)
 {
 	m_player.update(delta);
+
+	for (int i = 0; i < (int)m_enemies.size(); ++i)
+	{
+		m_enemies[i].setPlayer(m_player);
+		m_enemies[i].update(delta);
+	}
 }
 
 void ld::PlayState::draw()
 {
 	m_player.draw();
+	for (auto &i:m_enemies)
+	{
+		i.draw();
+	}
 }
 
+void ld::PlayState::addEnemy()
+{
+
+	m_enemies.emplace_back(*m_window);
+	auto& ref = m_enemies.back();
+
+	auto tex = ldResource.getTexture("assets/Graphics/Enemies/Alien_1_sheet.png");
+	Animation anim;
+	anim.load(*tex,3);
+	anim.setChangeTime(0.5f);
+	anim.start();
+	ref.setAnimation(anim);
+	ref.setTexture(tex);
+	tex->setSmooth(true);
+	ref.setSize(sf::Vector2f(256.f, 148.f));
+	ref.setOrigin(ref.getSize().x / 2, ref.getSize().y / 2);
+	ref.setPosition(1300.f,1300.f);
+}
