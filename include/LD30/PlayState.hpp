@@ -22,6 +22,8 @@ namespace ld
 
 		void draw() final override;
 
+		void addEnemy();
+
 	private:
 
 		Player m_player;

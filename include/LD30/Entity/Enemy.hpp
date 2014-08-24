@@ -15,5 +15,6 @@ namespace ld
 		void setPlayer(Player &player);
 	private:
 		Player* m_player;
+		void move(const float delta);
 	};
 }
