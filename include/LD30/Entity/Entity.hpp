@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 namespace sf
 {
@@ -8,7 +8,7 @@ namespace sf
 
 namespace ld
 {
-	class Entity : public sf::Sprite
+	class Entity : public sf::RectangleShape
 	{
 	public:
 		Entity(sf::RenderWindow &window);

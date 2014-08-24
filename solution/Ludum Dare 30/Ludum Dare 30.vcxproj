@@ -23,6 +23,7 @@
     <ClCompile Include="..\..\src\LD30\Menu\MainMenu.cpp" />
     <ClCompile Include="..\..\src\LD30\Menu\PlayMenu.cpp" />
     <ClCompile Include="..\..\src\LD30\Misc.cpp" />
+    <ClCompile Include="..\..\src\LD30\PlayState.cpp" />
     <ClCompile Include="..\..\src\LD30\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\LD30\Settings.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="..\..\include\LD30\Menu\MainMenu.hpp" />
     <ClInclude Include="..\..\include\LD30\Menu\PlayMenu.hpp" />
     <ClInclude Include="..\..\include\LD30\Misc.hpp" />
+    <ClInclude Include="..\..\include\LD30\PlayState.hpp" />
     <ClInclude Include="..\..\include\LD30\ResourceManager.hpp" />
     <ClInclude Include="..\..\include\LD30\Settings.hpp" />
   </ItemGroup>

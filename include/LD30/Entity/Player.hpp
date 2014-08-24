@@ -9,7 +9,8 @@ namespace ld
 	public:
 		Player(sf::RenderWindow &window);
 		~Player();
-		void update(const float dt) final override;
+		void update(const float delta) final override;
+		void keyInput(const float delta);
 	private:
 
 	};
