@@ -38,12 +38,15 @@ void ld::Player::update(const float delta)
 
 	m_direction *= 1 - friction - delta / 10;
 	moveShield(delta);
+
+    handleRope();
 }
 
 void ld::Player::draw()
 {
+    m_window->draw(m_shield);
+    m_window->draw(m_rope);
 	m_window->draw(*this);
-	m_window->draw(m_shield);
 }
 
 void ld::Player::keyInput(const float delta)
@@ -67,4 +70,9 @@ void ld::Player::moveShield(const float delta)
 	m_shieldDir *= 1 - shieldFriction * delta;
 
 	m_shield.move(m_shieldDir * shieldSpeedMultiplier);
+}
+
+void ld::Player::handleRope()
+{
+    m_rope.setPosition(getPosition());
 }

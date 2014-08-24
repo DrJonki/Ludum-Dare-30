@@ -8,6 +8,7 @@ namespace sf
 {
     class Texture;
     class SoundBuffer;
+    class Font;
 }
 
 namespace ld
@@ -34,7 +35,8 @@ namespace ld
         enum ResourceType
         {
             Texture = 1,
-            SoundBuffer = 1 << 1
+            SoundBuffer = 1 << 1,
+            Font = 1 << 2
         };
 
         static ResourceManager& getInstance();
@@ -49,10 +51,15 @@ namespace ld
 
         void deleteSoundBuffer(const std::string& path);
 
+        sf::Font* getFont(const std::string& path);
+
+        void deleteFont(const std::string& path);
+
     private:
 
         std::unordered_map<std::string, std::unique_ptr<sf::Texture>> m_textures;
         std::unordered_map<std::string, std::unique_ptr<sf::SoundBuffer>> m_soundBuffers;
+        std::unordered_map<std::string, std::unique_ptr<sf::Font>> m_fonts;
     };
 }
 

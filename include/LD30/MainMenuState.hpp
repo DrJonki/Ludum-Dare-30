@@ -33,7 +33,7 @@ namespace ld
         {
             Main,
             Play,
-            Options,
+            Credits,
             Count
         };
 

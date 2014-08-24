@@ -1,6 +1,7 @@
 #include <LD30/ResourceManager.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Graphics/Font.hpp>
 
 
 ld::ResourceManager::ResourceManager()
@@ -27,6 +28,8 @@ void ld::ResourceManager::clearResources(ResourceType type)
         m_textures.clear();
     if ((type & SoundBuffer) != 0)
         m_soundBuffers.clear();
+    if ((type & Font) != 0)
+        m_fonts.clear();
 }
 
 sf::Texture* ld::ResourceManager::getTexture(const std::string& path)
@@ -77,5 +80,30 @@ void ld::ResourceManager::deleteSoundBuffer(const std::string& path)
 
     if (itr != m_soundBuffers.end())
         m_soundBuffers.erase(itr);
+}
+
+sf::Font* ld::ResourceManager::getFont(const std::string& path)
+{
+    auto itr = m_fonts.find(path);
+
+    if (itr != m_fonts.end())
+        return itr->second.get();
+
+    std::unique_ptr<sf::Font> font(new sf::Font());
+
+    if (!font->loadFromFile(path))
+        return nullptr;
+
+    auto returnPointer = font.get();
+    m_fonts[path].swap(font);
+    return returnPointer;
+}
+
+void ld::ResourceManager::deleteFont(const std::string& path)
+{
+    auto itr = m_fonts.find(path);
+
+    if (itr != m_fonts.end())
+        m_fonts.erase(itr);
 }
 
