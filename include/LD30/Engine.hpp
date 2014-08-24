@@ -40,6 +40,10 @@ namespace ld
 
         void setShouldExit(const bool exit);
 
+        bool isPaused();
+
+        void setPaused(const bool paused);
+
 
     private:
 

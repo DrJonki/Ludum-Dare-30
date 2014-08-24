@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+
 
 namespace sf
 {
@@ -8,6 +11,8 @@ namespace sf
 
 namespace ld
 {
+    class Element;
+
     class BaseMenu
     {
     public:
@@ -23,9 +28,11 @@ namespace ld
 
         void offsetDelta(const float d);
 
-        virtual void fadeInStep(const float delta);
+        void addElement(Element* element);
 
-        virtual void fadeOutStep(const float delta);
+        virtual void fadeInStep(const float delta) = 0;
+
+        virtual void fadeOutStep(const float delta) = 0;
 
         virtual void update(const float delta) = 0;
 
@@ -40,5 +47,6 @@ namespace ld
     protected:
 
         sf::RenderWindow* m_window;
+        std::vector<std::unique_ptr<Element>> m_elements;
     };
 }
