@@ -36,5 +36,7 @@ namespace ld
 		int difficulty, startLives;
 		bool easterEgg;
 		sf::Vector2f getRandSpawnPos();
+		bool ifCollide(sf::RectangleShape A, sf::RectangleShape B);
+		void collisionCheck();
 	};
 }

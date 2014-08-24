@@ -152,3 +152,33 @@ sf::Vector2f ld::PlayState::getRandSpawnPos()
 	}
 	return sf::Vector2f(0,0);
 }
+
+void ld::PlayState::collisionCheck()
+{
+	for (auto &i : m_enemies)
+	{
+		if (ifCollide(m_player, i))
+		{
+			//Do stuff (explosion and shit
+		}
+		if (ifCollide(m_player.m_shield, i))
+		{
+			//Aliens explode
+		}
+	}
+}
+
+bool ld::PlayState::ifCollide(sf::RectangleShape A, sf::RectangleShape B)
+{
+	float aRad = A.getGlobalBounds.getSize().y;
+	float bRad = B.getGlobalBounds.getSize().y;
+	float length = aRad + bRad;
+
+	sf::Vector2f aPos = A.getPosition();
+	sf::Vector2f bPos = B.getPosition();
+	sf::Vector2f diff = aPos - bPos;
+
+	float magn = diff.x*diff.x + diff.y*diff.y;
+
+	return magn <= length;
+}
