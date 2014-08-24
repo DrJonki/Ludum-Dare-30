@@ -4,6 +4,8 @@
 #include <LD30/Menu/Button.hpp>
 #include <LD30/ResourceManager.hpp>
 #include <LD30/Engine.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 
 ld::MainMenuState::MainMenuState(sf::RenderWindow& window)
@@ -23,46 +25,67 @@ bool ld::MainMenuState::init()
     // Main menu
     {
         m_menus[Main].reset(new MainMenu(*m_window));
+        m_menus[Main]->setDelta(1.f);
 
         std::array<std::unique_ptr<Button>, 3> buttons;
-        for (std::size_t i = 0; i < buttons.size(); ++i)
+        for (auto& i : buttons)
         {
-            buttons[i].reset(new Button(*m_window));
+            i.reset(new Button(*m_window));
 
             // Common properties
-            buttons[i]->setSize(sf::Vector2f(250, 200));
-            buttons[i]->setFillColor(sf::Color(255, 255, 255, 255));
-            buttons[i]->setPosition(100.f, 100.f + (i * (buttons[i]->getSize().y + 50.f)));
+            i->setFillColor(sf::Color(255, 255, 255, 255));
         }
 
-        /****** Play button ******/
-        buttons[0]->setTexture(ldResource.getTexture(""));
-        buttons[0]->setCallback([this]()
-        {
-            m_menuState = Play;
-        });
+        const float buttonOffset = 50.f;
+        const float originxOffset = -100.f;
 
         /****** Options button ******/
-        buttons[1]->setTexture(ldResource.getTexture(""));
+        auto tex = ldResource.getTexture("assets/Graphics/Menus/options.png");
+        buttons[1]->setTexture(tex);
+        buttons[1]->setSize(sf::Vector2f(tex->getSize()) / 1.5f);
+        buttons[1]->setOrigin(originxOffset, buttons[1]->getSize().y / 2.f);
         buttons[1]->setCallback([this]()
         {
             m_menuState = Options;
         });
 
+        /****** Play button ******/
+        tex = ldResource.getTexture("assets/Graphics/Menus/start.png");
+        buttons[0]->setTexture(tex);
+        buttons[0]->setSize(buttons[1]->getSize());
+        buttons[0]->setOrigin(originxOffset, buttons[0]->getSize().y + buttonOffset + (buttons[1]->getSize().y / 2.f));
+        buttons[0]->setCallback([this]()
+        {
+            m_menuState = Play;
+        });
+
         /****** Exit button ******/
-        buttons[2]->setTexture(ldResource.getTexture(""));
+        tex = ldResource.getTexture("assets/Graphics/Menus/quit.png");
+        buttons[2]->setTexture(tex);
+        buttons[2]->setSize(buttons[1]->getSize());
+        buttons[2]->setOrigin(originxOffset, -(buttonOffset + (buttons[1]->getSize().y / 2.f)));
         buttons[2]->setCallback([this]()
         {
             ld::Engine::getInstance().setShouldExit(true);
         });
 
         // Add all buttons to menu
+        sf::Vector2f pos(0, 100.f + (1.5f * buttons[1]->getSize().y) + buttonOffset);
+        //sf::Vector2f pos(0, m_window->getView().getSize().y / 2.f);
         for (auto& i : buttons)
+        {
+            i->setPosition(pos);
             m_menus[Main]->addElement(i.release());
+        }
     }
 
     Button backButton(*m_window);
-    backButton.setTexture(ldResource.getTexture(""));
+    auto tex = ldResource.getTexture("assets/Graphics/Menus/retry.png");
+    backButton.setTexture(tex);
+    backButton.setSize(sf::Vector2f(tex->getSize()));
+    backButton.setOrigin(0, backButton.getSize().y);
+    backButton.setPosition(100, m_window->getView().getSize().y - 100.f);
+    backButton.setFillColor(sf::Color(255, 255, 255, 0));
     backButton.setCallback([this]()
     {
         m_menuState = Main;
@@ -70,7 +93,34 @@ bool ld::MainMenuState::init()
 
     // Play menu
     {
+        m_menus[Play].reset(new PlayMenu(*m_window));
 
+        std::array<std::unique_ptr<Button>, 2> buttons;
+        for (auto& i : buttons)
+        {
+            i.reset(new Button(*m_window));
+
+            i->setFillColor(sf::Color(255, 255, 255, 255));
+        }
+
+        buttons[0]->setSize(sf::Vector2f(300, 300));
+        buttons[0]->setPosition(m_window->getView().getSize().x, 200);
+        buttons[0]->setCallback([this]()
+        {
+            ld::Engine::getInstance().changeState(nullptr);
+        });
+
+        buttons[1]->setSize(sf::Vector2f(300, 300));
+        buttons[1]->setPosition(buttons[0]->getPosition().x, buttons[0]->getPosition().y + 350);
+        buttons[1]->setCallback([this]()
+        {
+            ld::Engine::getInstance().changeState(nullptr);
+        });
+
+        for (auto& i : buttons)
+            m_menus[Play]->addElement(i.release());
+
+        m_menus[Play]->addElement(new Button(backButton));
     }
 
     // options menu

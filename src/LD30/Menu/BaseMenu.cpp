@@ -22,8 +22,12 @@ float ld::BaseMenu::getDelta()
 
 void ld::BaseMenu::setDelta(const float d)
 {
-    m_delta = std::min(d, 1.0f);
-    m_delta = std::max(0.f, d);
+    m_delta = d;
+
+    if (m_delta < 0.f)
+        m_delta = 0.f;
+    else if (m_delta > 1.f)
+        m_delta = 1.f;
 }
 
 void ld::BaseMenu::offsetDelta(const float d)
@@ -33,7 +37,8 @@ void ld::BaseMenu::offsetDelta(const float d)
 
 void ld::BaseMenu::addElement(Element* element)
 {
-    m_elements.emplace_back(element);
+    if (element)
+        m_elements.emplace_back(element);
 }
 
 void ld::BaseMenu::fadeInStep(const float delta)
