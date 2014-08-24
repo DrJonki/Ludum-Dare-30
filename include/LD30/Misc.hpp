@@ -5,6 +5,8 @@
 
 namespace ld
 {
+    static const float pi = 3.141592653f;
+
     class Misc
     {
     public:

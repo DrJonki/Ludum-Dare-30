@@ -24,8 +24,8 @@ namespace
                                         title, sf::Style::Close);
         }
 
-        sf::Vector2f wsize(wndw->getSize());
-        wndw->setView(sf::View(wsize / 2.f, sf::Vector2f(1920.f, 1080.f)));
+        sf::Vector2f wsize(1920.f, 1080.f);
+        wndw->setView(sf::View(wsize / 2.f, wsize));
         
         return wndw;
     }
@@ -61,6 +61,7 @@ bool ld::Engine::init()
     m_window.reset(openWindow(nullptr));
     
     m_currentState.reset(new MainMenuState(*m_window));
+    m_currentState->init();
 
     return (m_window->isOpen() && m_currentState);
 }
@@ -108,4 +109,14 @@ void ld::Engine::changeState(GameState* state)
 void ld::Engine::setShouldExit(const bool exit)
 {
     m_shouldExit = exit;
+}
+
+bool ld::Engine::isPaused()
+{
+    return m_paused;
+}
+
+void ld::Engine::setPaused(const bool paused)
+{
+    m_paused = paused;
 }

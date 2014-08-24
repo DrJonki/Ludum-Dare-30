@@ -1,12 +1,13 @@
 #pragma once
 
 #include <LD30/Menu/Element.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <functional>
 
 
 namespace ld
 {
-    class Button : public Element
+    class Button : public Element, public sf::RectangleShape
     {
     public:
 

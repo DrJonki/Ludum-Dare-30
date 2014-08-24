@@ -1,4 +1,5 @@
 #include <LD30/Menu/BaseMenu.hpp>
+#include <LD30/Menu/Element.hpp>
 #include <algorithm>
 
 
@@ -28,6 +29,11 @@ void ld::BaseMenu::setDelta(const float d)
 void ld::BaseMenu::offsetDelta(const float d)
 {
     setDelta(m_delta + d);
+}
+
+void ld::BaseMenu::addElement(Element* element)
+{
+    m_elements.emplace_back(element);
 }
 
 void ld::BaseMenu::fadeInStep(const float delta)
