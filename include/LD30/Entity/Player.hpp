@@ -11,8 +11,8 @@ namespace ld
 		~Player();
 		void update(const float delta) final override;
 		void draw() final override;
-		void keyInput(const float delta);
 
+		void movePlayer(const float delta);
 		void moveShield(const float delta);
 
 		sf::RectangleShape m_shield;
