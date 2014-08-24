@@ -17,9 +17,11 @@ ld::MainMenu::~MainMenu()
 
 }
 
+const float stepMult = 1.2f;
+
 void ld::MainMenu::fadeInStep(const float delta)
 {
-    BaseMenu::fadeInStep(delta);
+    BaseMenu::fadeInStep(delta * stepMult);
 
     const float min = 0.75f;
     const float scale = min + (std::abs(std::sinf(getDelta() * ld::pi * 0.5f)) * (1.f - min));
@@ -31,7 +33,7 @@ void ld::MainMenu::fadeInStep(const float delta)
 
 void ld::MainMenu::fadeOutStep(const float delta)
 {
-    BaseMenu::fadeOutStep(delta);
+    BaseMenu::fadeOutStep(delta * stepMult);
 
     fadeInStep(0.f);
 }

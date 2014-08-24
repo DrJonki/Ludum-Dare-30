@@ -1,6 +1,7 @@
 #pragma once
 
 #include <LD30/GameState.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <array>
 #include <memory>
 
@@ -37,5 +38,6 @@ namespace ld
 
         std::array<std::unique_ptr<BaseMenu>, Count> m_menus;
         MenuState m_menuState;
+        sf::RectangleShape m_background;
     };
 }

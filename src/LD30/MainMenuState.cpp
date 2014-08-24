@@ -23,6 +23,9 @@ ld::MainMenuState::~MainMenuState()
 
 bool ld::MainMenuState::init()
 {
+    m_background.setSize(m_window->getView().getSize());
+    m_background.setTexture(ldResource.getTexture("assets/Graphics/Menus/main_menu.png"));
+
     // Main menu
     {
         m_menus[Main].reset(new MainMenu(*m_window));
@@ -43,11 +46,11 @@ bool ld::MainMenuState::init()
         /****** Options button ******/
         auto tex = ldResource.getTexture("assets/Graphics/Menus/options.png");
         buttons[1]->setTexture(tex);
-        buttons[1]->setSize(sf::Vector2f(tex->getSize()) / 1.5f);
+        buttons[1]->setSize(sf::Vector2f(tex->getSize()) / 1.2f);
         buttons[1]->setOrigin(originxOffset, buttons[1]->getSize().y / 2.f);
         buttons[1]->setCallback([this]()
         {
-            m_menuState = Options;
+            //m_menuState = Options;
         });
 
         /****** Play button ******/
@@ -96,7 +99,7 @@ bool ld::MainMenuState::init()
     {
         m_menus[Play].reset(new PlayMenu(*m_window));
 
-        std::array<std::unique_ptr<Button>, 2> buttons;
+        std::array<std::unique_ptr<Button>, 3> buttons;
         for (auto& i : buttons)
         {
             i.reset(new Button(*m_window));
@@ -104,16 +107,28 @@ bool ld::MainMenuState::init()
             i->setFillColor(sf::Color(255, 255, 255, 255));
         }
 
-        buttons[0]->setSize(sf::Vector2f(300, 300));
+        const float buttonOffset = 50.f;
+
+        buttons[0]->setTexture(ldResource.getTexture("assets/Graphics/Menus/easy.png"));
+        buttons[0]->setSize(sf::Vector2f(300, 150));
         buttons[0]->setPosition(m_window->getView().getSize().x, 200);
         buttons[0]->setCallback([this]()
         {
             ld::Engine::getInstance().changeState(new PlayState(*m_window));
         });
 
-        buttons[1]->setSize(sf::Vector2f(300, 300));
-        buttons[1]->setPosition(buttons[0]->getPosition().x, buttons[0]->getPosition().y + 350);
+        buttons[1]->setTexture(ldResource.getTexture("assets/Graphics/Menus/medium.png"));
+        buttons[1]->setSize(buttons[0]->getSize());
+        buttons[1]->setPosition(buttons[0]->getPosition().x, buttons[0]->getPosition().y + (buttons[0]->getSize().y + buttonOffset) * buttons[0]->getScale().y);
         buttons[1]->setCallback([this]()
+        {
+            ld::Engine::getInstance().changeState(new PlayState(*m_window));
+        });
+
+        buttons[2]->setTexture(ldResource.getTexture("assets/Graphics/Menus/hard.png"));
+        buttons[2]->setSize(buttons[1]->getSize());
+        buttons[2]->setPosition(buttons[1]->getPosition().x, buttons[1]->getPosition().y + (buttons[1]->getSize().y + buttonOffset) * buttons[1]->getScale().y);
+        buttons[2]->setCallback([this]()
         {
             ld::Engine::getInstance().changeState(new PlayState(*m_window));
         });
@@ -155,7 +170,7 @@ void ld::MainMenuState::update(const float delta)
 
 void ld::MainMenuState::draw()
 {
-
+    m_window->draw(m_background);
 
     for (auto& i : m_menus)
     {

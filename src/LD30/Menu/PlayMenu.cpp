@@ -14,9 +14,11 @@ ld::PlayMenu::~PlayMenu()
 
 }
 
+const float stepMult = 1.2f;
+
 void ld::PlayMenu::fadeInStep(const float delta)
 {
-    BaseMenu::fadeInStep(delta);
+    BaseMenu::fadeInStep(delta * stepMult);
 
     for (std::size_t i = 0; i < m_elements.size() - 1; ++i)
     {
@@ -25,17 +27,21 @@ void ld::PlayMenu::fadeInStep(const float delta)
         static const float basePos = m_window->getView().getSize().x * 0.666666f;
         static const float difference = startPos.x - basePos;
 
-        but->setPosition(std::max(basePos, startPos.x - (getDelta() * difference + 250.f) + (i * 75.f)),
+        const float offset = 100.f;
+
+        but->setPosition(std::max(basePos, startPos.x - (getDelta() * difference + (static_cast<float>(m_elements.size() - 1) * offset)) + (i * offset)),
                          but->getPosition().y);
-        but->setFillColor(sf::Color(255, 255, 255, static_cast<char>(getDelta() * 255.f)));
+        but->setFillColor(sf::Color(255, 255, 255,
+            static_cast<char>(getDelta() * (1.f - (but->getPosition().x - basePos) / difference) * 255.f)));
     }
 
-    static_cast<Button*>(m_elements.back().get())->setFillColor(sf::Color(255, 255, 255, static_cast<char>(getDelta() * 255.f)));
+    static_cast<Button*>(m_elements.back().get())->setFillColor(sf::Color(255, 255, 255,
+                                                                          static_cast<char>(getDelta() * 255.f)));
 }
 
 void ld::PlayMenu::fadeOutStep(const float delta)
 {
-    BaseMenu::fadeOutStep(delta);
+    BaseMenu::fadeOutStep(delta * stepMult);
 
     fadeInStep(0.f);
 }
