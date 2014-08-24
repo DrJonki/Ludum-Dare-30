@@ -14,5 +14,9 @@ namespace ld
         static std::string readTextFile(const std::string& path, const bool create);
 
         static std::string getHomeDir(const std::string& folder);
+
+        static float getRandomFloat(const float min, const float max);
+
+        static int getRandomInt(const int min, const int max);
     };
 }
