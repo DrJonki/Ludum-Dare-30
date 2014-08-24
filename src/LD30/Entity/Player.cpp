@@ -11,11 +11,29 @@ const float friction = 80.f;
 const float border = 80.f;
 
 const float ropeLenghtSquared = powf(150,2);
-const float shieldDrag = 0.2f;
-const float shieldFriction = 20.f;
-const float shieldMassMultiplier = 0.0001f;
-const float shieldSpeedMultiplier = 0.05f;
+const float rubberbandStrength = 100.0f;
 
+const float shieldDrag = 0.3f;
+const float shieldFriction = 0.5f;
+const float shieldMassMultiplier = 10.f;
+const float shieldSpeedMultiplier = 1.f;
+
+sf::Vector2f normalize(sf::Vector2f vec)
+{
+	float mag = vec.x*vec.x + vec.y*vec.y;
+	sf::Vector2f retVal;
+
+	if (mag == 0)
+	{
+		retVal = sf::Vector2f(0, 0);
+	}
+	else
+	{
+		retVal = sf::Vector2f(vec.x / sqrt(mag), vec.y / sqrt(mag));
+	}
+
+	return retVal;
+}
 
 ld::Player::Player(sf::RenderWindow &window)
 :Entity(window)
@@ -31,7 +49,7 @@ ld::Player::~Player()
 void ld::Player::update(const float delta)
 {
 	movePlayer(delta);
-	moveShield(delta);
+	shieldMovement(delta);
 }
 
 void ld::Player::draw()
@@ -80,8 +98,7 @@ void ld::Player::movePlayer(const float delta)
 	const float mag = std::sqrt(m_direction.x*m_direction.x + m_direction.y*m_direction.y);
 	if (mag > maxspeed)
 	{
-		sf::Vector2f normalize = m_direction / mag;
-		m_direction = normalize*maxspeed;
+		m_direction = m_direction / mag * maxspeed;
 	}
 	this->move(m_direction*delta);
 
@@ -100,19 +117,33 @@ void ld::Player::movePlayer(const float delta)
 	}
 }
 
-void ld::Player::moveShield(const float delta)
+void ld::Player::shieldMovement(const float delta)
 {
-	sf::Vector2f dif = (*this).getPosition() - m_shield.getPosition();
+	shieldRubberband(delta);
 
-	float magSquared = dif.x*dif.x + dif.y*dif.y;
+	shieldSlow(delta);
+
+	m_shield.move(m_shieldDir * shieldSpeedMultiplier * delta);
+}
+
+void ld::Player::shieldRubberband(const float delta)
+{
+	const sf::Vector2f dif = (*this).getPosition() - m_shield.getPosition();
+	const float magSquared = dif.x*dif.x + dif.y*dif.y;
+	const sf::Vector2f norm = dif / magSquared;
+	const float amount = sqrt(magSquared - ropeLenghtSquared);
+
 	if (magSquared > ropeLenghtSquared)
 	{
-		m_shieldDir += (dif / magSquared) * sqrt(magSquared - ropeLenghtSquared) / shieldMassMultiplier * delta;
+		m_shieldDir += norm * amount * rubberbandStrength * delta;
 	}
+}
 
+void ld::Player::shieldSlow(const float delta)
+{
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 	{
-		m_shieldDir -= (m_shieldDir / sqrt(magSquared)) * shieldFriction * delta;
+		m_shieldDir -= normalize(m_shieldDir) * shieldFriction * delta;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
 	{
@@ -120,9 +151,7 @@ void ld::Player::moveShield(const float delta)
 	}
 	else
 	{
-		m_shieldDir -= (m_shieldDir / sqrt(magSquared)) * shieldFriction * delta;
+		m_shieldDir -= normalize(m_shieldDir) * shieldFriction * delta;
 		m_shieldDir *= 1 - shieldDrag * delta;
 	}
-
-	m_shield.move(m_shieldDir * shieldSpeedMultiplier * delta);
 }
