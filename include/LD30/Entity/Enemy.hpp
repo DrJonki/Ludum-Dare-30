@@ -1,6 +1,7 @@
 #pragma once
 
 #include <LD30/Entity/Entity.hpp>
+#include <LD30/Entity/Animation.hpp>
 
 namespace ld
 {
@@ -13,8 +14,10 @@ namespace ld
 		~Enemy();
 		void update(const float dt) final override;
 		void setPlayer(Player &player);
+		void setAnimation(Animation &animation);
 	private:
 		Player* m_player;
+		Animation m_animation;
 		void move(const float delta);
 	};
 }

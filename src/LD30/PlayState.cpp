@@ -44,9 +44,9 @@ void ld::PlayState::update(const float delta)
 void ld::PlayState::draw()
 {
 	m_window->draw(m_player);
-	for (int i = 0; i < (int)m_enemies.size(); ++i)
+	for (auto &i:m_enemies)
 	{
-		m_window->draw(m_enemies[i]);
+		m_window->draw(i);
 	}
 }
 
@@ -56,9 +56,15 @@ void ld::PlayState::addEnemy()
 	m_enemies.emplace_back(*m_window);
 	auto& ref = m_enemies.back();
 
-	auto tex = ldResource.getTexture("assets/Graphics/Enemies/Alien_1_1.png");
+	auto tex = ldResource.getTexture("assets/Graphics/Enemies/Alien_1_sheet.png");
+	Animation anim;
+	anim.load(*tex,3);
+	anim.setChangeTime(0.5f);
+	anim.start();
+	ref.setAnimation(anim);
+	ref.setTexture(tex);
 	tex->setSmooth(true);
-	ref.setSize(sf::Vector2f(128.f, 128.f));
+	ref.setSize(sf::Vector2f(256.f, 148.f));
 	ref.setOrigin(ref.getSize().x / 2, ref.getSize().y / 2);
 	ref.setPosition(1300.f,1300.f);
 }
