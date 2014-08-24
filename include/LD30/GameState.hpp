@@ -16,7 +16,6 @@ namespace ld
 
         virtual ~GameState() = 0;
 
-
         virtual bool init() = 0;
 
         virtual void update(const float delta) = 0;

@@ -12,6 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\LD30\Engine.cpp" />
+    <ClCompile Include="..\..\src\LD30\Entity\Enemy.cpp" />
+    <ClCompile Include="..\..\src\LD30\Entity\Entity.cpp" />
+    <ClCompile Include="..\..\src\LD30\Entity\Player.cpp" />
     <ClCompile Include="..\..\src\LD30\GameState.cpp" />
     <ClCompile Include="..\..\src\LD30\MainMenuState.cpp" />
     <ClCompile Include="..\..\src\LD30\Menu\BaseMenu.cpp" />
@@ -20,12 +23,16 @@
     <ClCompile Include="..\..\src\LD30\Menu\MainMenu.cpp" />
     <ClCompile Include="..\..\src\LD30\Menu\PlayMenu.cpp" />
     <ClCompile Include="..\..\src\LD30\Misc.cpp" />
+    <ClCompile Include="..\..\src\LD30\PlayState.cpp" />
     <ClCompile Include="..\..\src\LD30\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\LD30\Settings.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\LD30\Engine.hpp" />
+    <ClInclude Include="..\..\include\LD30\Entity\Enemy.hpp" />
+    <ClInclude Include="..\..\include\LD30\Entity\Entity.hpp" />
+    <ClInclude Include="..\..\include\LD30\Entity\Player.hpp" />
     <ClInclude Include="..\..\include\LD30\GameState.hpp" />
     <ClInclude Include="..\..\include\LD30\MainMenuState.hpp" />
     <ClInclude Include="..\..\include\LD30\Menu\BaseMenu.hpp" />
@@ -34,6 +41,7 @@
     <ClInclude Include="..\..\include\LD30\Menu\MainMenu.hpp" />
     <ClInclude Include="..\..\include\LD30\Menu\PlayMenu.hpp" />
     <ClInclude Include="..\..\include\LD30\Misc.hpp" />
+    <ClInclude Include="..\..\include\LD30\PlayState.hpp" />
     <ClInclude Include="..\..\include\LD30\ResourceManager.hpp" />
     <ClInclude Include="..\..\include\LD30\Settings.hpp" />
   </ItemGroup>

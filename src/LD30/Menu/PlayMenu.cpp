@@ -25,7 +25,7 @@ void ld::PlayMenu::fadeInStep(const float delta)
         static const float basePos = m_window->getView().getSize().x * 0.666666f;
         static const float difference = startPos.x - basePos;
 
-        but->setPosition(std::max(basePos, startPos.x - (getDelta() * difference) + (i * 75.f)),
+        but->setPosition(std::max(basePos, startPos.x - (getDelta() * difference + 250.f) + (i * 75.f)),
                          but->getPosition().y);
         but->setFillColor(sf::Color(255, 255, 255, static_cast<char>(getDelta() * 255.f)));
     }
