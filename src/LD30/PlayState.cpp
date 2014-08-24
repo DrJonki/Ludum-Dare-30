@@ -39,12 +39,18 @@ bool ld::PlayState::init()
 void ld::PlayState::update(const float delta)
 {
 	m_player.update(delta);
-
 	for (int i = 0; i < (int)m_enemies.size(); ++i)
 	{
 		m_enemies[i].setPlayer(m_player);
 		m_enemies[i].update(delta);
 	}
+
+	m_spawnTime += delta;
+	countTimeForEnemies();
+	if (m_Time > m_minTime)
+		m_Time -= delta / 100;
+	else
+		m_Time = m_minTime;
 }
 
 void ld::PlayState::draw()
@@ -72,5 +78,59 @@ void ld::PlayState::addEnemy()
 	tex->setSmooth(true);
 	ref.setSize(sf::Vector2f(256.f, 148.f));
 	ref.setOrigin(ref.getSize().x / 2, ref.getSize().y / 2);
-	ref.setPosition(1300.f,1300.f);
+	ref.setPosition(getRandSpawnPos());
+}
+
+void ld::PlayState::countTimeForEnemies()
+{
+	if (m_Time <= m_spawnTime)
+	{
+		m_spawnTime = 0;
+		addEnemy();
+	}
+}
+
+void ld::PlayState::setDifficulty(int dif)
+{
+	switch (dif)
+	{
+	case 1:
+		m_Time = 15.f;
+		m_minTime = 7.f;
+		startLives = 5;
+		break;
+	case 2:
+		m_Time = 13.f;
+		m_minTime = 6.f;
+		startLives = 4;
+		break;
+	case 3:
+		m_Time = 10.f;
+		m_minTime = 5.f;
+		startLives = 3;
+		break;
+	}
+}
+
+sf::Vector2f ld::PlayState::getRandSpawnPos()
+{
+	auto &ref = m_window->getView();
+	switch (ld::Misc::getRandomInt(1, 4))
+	{
+	case 1: //Left
+		return sf::Vector2f(-300,ld::Misc::getRandomFloat(0,ref.getSize().y));
+		break;
+	case 2: //Right
+		return sf::Vector2f(ref.getSize().x + 300, ld::Misc::getRandomFloat(0, ref.getSize().y));
+		break;
+	case 3: //Top
+		return sf::Vector2f(ld::Misc::getRandomFloat(0, ref.getSize().x), -ref.getSize().y - 300);
+		break;
+	case 4: //Bottom
+		return sf::Vector2f(ld::Misc::getRandomFloat(0, ref.getSize().y), ref.getSize().y + 300);
+
+		break;
+	}
+
+	return sf::Vector2f(0,0);
 }

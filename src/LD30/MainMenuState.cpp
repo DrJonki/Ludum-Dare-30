@@ -118,8 +118,10 @@ bool ld::MainMenuState::init()
         buttons[0]->setSize(sf::Vector2f(300, 150));
         buttons[0]->setPosition(m_window->getView().getSize().x, 200);
         buttons[0]->setCallback([this]()
-        {
-            ld::Engine::getInstance().changeState(new PlayState(*m_window));
+		{
+			auto ptr = new PlayState(*m_window);
+			ptr->setDifficulty(1);
+			ld::Engine::getInstance().changeState(ptr);
         });
 
         buttons[1]->setTexture(ldResource.getTexture("assets/Graphics/Menus/medium.png"));
@@ -127,15 +129,19 @@ bool ld::MainMenuState::init()
         buttons[1]->setPosition(buttons[0]->getPosition().x, buttons[0]->getPosition().y + (buttons[0]->getSize().y + buttonOffset) * buttons[0]->getScale().y);
         buttons[1]->setCallback([this]()
         {
-            ld::Engine::getInstance().changeState(new PlayState(*m_window));
+			auto ptr = new PlayState(*m_window);
+			ptr->setDifficulty(2);
+			ld::Engine::getInstance().changeState(ptr);
         });
 
         buttons[2]->setTexture(ldResource.getTexture("assets/Graphics/Menus/hard.png"));
         buttons[2]->setSize(buttons[1]->getSize());
         buttons[2]->setPosition(buttons[1]->getPosition().x, buttons[1]->getPosition().y + (buttons[1]->getSize().y + buttonOffset) * buttons[1]->getScale().y);
         buttons[2]->setCallback([this]()
-        {
-            ld::Engine::getInstance().changeState(new PlayState(*m_window));
+		{
+			auto ptr = new PlayState(*m_window);
+			ptr->setDifficulty(3);
+			ld::Engine::getInstance().changeState(ptr);
         });
 
         for (auto& i : buttons)
