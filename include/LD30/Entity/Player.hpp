@@ -12,6 +12,6 @@ namespace ld
 		void update(const float delta) final override;
 		void keyInput(const float delta);
 	private:
-
+		sf::Vector2f m_direction;
 	};
 }
