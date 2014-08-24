@@ -18,13 +18,15 @@ ld::MainMenuState::MainMenuState(sf::RenderWindow& window)
 
 ld::MainMenuState::~MainMenuState()
 {
-
+    
 }
 
 bool ld::MainMenuState::init()
 {
     m_background.setSize(m_window->getView().getSize());
     m_background.setTexture(ldResource.getTexture("assets/Graphics/Menus/main_menu.png"));
+    if (m_music.openFromFile("assets/Audio/Music/Abstraction - Ludum Dare 28 - First Track.wav"))
+        m_music.play();
 
     // Main menu
     {
@@ -38,6 +40,7 @@ bool ld::MainMenuState::init()
 
             // Common properties
             i->setFillColor(sf::Color(255, 255, 255, 255));
+            i->setSound("assets/Audio/Sound Effects/menuselect.ogg");
         }
 
         const float buttonOffset = 50.f;
@@ -94,6 +97,7 @@ bool ld::MainMenuState::init()
     {
         m_menuState = Main;
     });
+    backButton.setSound("assets/Audio/Sound Effects/menuselect.ogg");
 
     // Play menu
     {
@@ -105,6 +109,7 @@ bool ld::MainMenuState::init()
             i.reset(new Button(*m_window));
 
             i->setFillColor(sf::Color(255, 255, 255, 255));
+            i->setSound("assets/Audio/Sound Effects/menuselect.ogg");
         }
 
         const float buttonOffset = 50.f;

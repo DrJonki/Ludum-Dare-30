@@ -70,7 +70,7 @@ bool ld::Engine::mainLoop()
 {
     sf::Clock frameClock;
 
-    while (!m_shouldExit)
+    while (!m_shouldExit && m_currentState)
     {
         // If changeState has been called, the current state will be removed & deleted and replaced with the new one.
         if (m_nextState)
@@ -95,6 +95,9 @@ bool ld::Engine::mainLoop()
                 m_shouldExit = true;
         }
     }
+
+    if (m_currentState)
+        m_currentState.reset(nullptr);
 
     ld::Settings::writeSettings();
 
