@@ -2,6 +2,7 @@
 #include <LD30/ResourceManager.hpp>
 #include <LD30/Engine.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window.hpp>
 
 ld::PlayState::PlayState(sf::RenderWindow& window)
 	: GameState(window),
@@ -64,18 +65,32 @@ void ld::PlayState::draw()
 
 void ld::PlayState::addEnemy()
 {
-
 	m_enemies.emplace_back(*m_window);
 	auto& ref = m_enemies.back();
 
-	auto tex = ldResource.getTexture("assets/Graphics/Enemies/Alien_1_sheet.png");
-	Animation anim;
-	anim.load(*tex,3);
-	anim.setChangeTime(0.5f);
-	anim.start();
-	ref.setAnimation(anim);
-	ref.setTexture(tex);
-	tex->setSmooth(true);
+	if (!easterEgg)
+	{
+		auto tex = ldResource.getTexture("assets/Graphics/Enemies/Alien_1_sheet.png");
+		Animation anim;
+		anim.load(*tex, 3);
+		anim.setChangeTime(0.5f);
+		anim.start();
+		ref.setAnimation(anim);
+		ref.setTexture(tex);
+		tex->setSmooth(true);
+	}
+	else
+	{
+		auto tex = ldResource.getTexture("assets/Graphics/Enemies/space core.png");
+		Animation anim;
+		anim.load(*tex, 1);
+		anim.setChangeTime(1);
+		anim.start();
+		ref.setTexture(tex);
+		tex->setSmooth(true);
+		ref.m_useAnim = false;
+		easterEgg = false;
+	}
 	ref.setSize(sf::Vector2f(256.f, 148.f));
 	ref.setOrigin(ref.getSize().x / 2, ref.getSize().y / 2);
 	ref.setPosition(getRandSpawnPos());
@@ -115,6 +130,11 @@ void ld::PlayState::setDifficulty(int dif)
 sf::Vector2f ld::PlayState::getRandSpawnPos()
 {
 	auto &ref = m_window->getView();
+
+	int east = ld::Misc::getRandomInt(1, 999);
+	if (east == 556)
+		easterEgg = true;
+
 	switch (ld::Misc::getRandomInt(1, 4))
 	{
 	case 1: //Left
@@ -128,9 +148,7 @@ sf::Vector2f ld::PlayState::getRandSpawnPos()
 		break;
 	case 4: //Bottom
 		return sf::Vector2f(ld::Misc::getRandomFloat(0, ref.getSize().y), ref.getSize().y + 300);
-
 		break;
 	}
-
 	return sf::Vector2f(0,0);
 }

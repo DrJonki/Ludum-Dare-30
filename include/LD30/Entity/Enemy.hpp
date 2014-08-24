@@ -15,6 +15,8 @@ namespace ld
 		void update(const float dt) final override;
 		void setPlayer(Player &player);
 		void setAnimation(Animation &animation);
+
+		bool m_useAnim;
 	private:
 		Player* m_player;
 		Animation m_animation;

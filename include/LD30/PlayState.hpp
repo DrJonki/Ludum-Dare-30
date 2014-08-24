@@ -34,7 +34,7 @@ namespace ld
 		std::vector<Enemy> m_enemies;
 		float m_spawnTime, m_Time, m_minTime;
 		int difficulty, startLives;
-
+		bool easterEgg;
 		sf::Vector2f getRandSpawnPos();
 	};
 }
