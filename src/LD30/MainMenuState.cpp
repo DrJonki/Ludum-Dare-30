@@ -4,6 +4,7 @@
 #include <LD30/Menu/Button.hpp>
 #include <LD30/ResourceManager.hpp>
 #include <LD30/Engine.hpp>
+#include <LD30/PlayState.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Audio/Sound.hpp>
 
@@ -107,14 +108,14 @@ bool ld::MainMenuState::init()
         buttons[0]->setPosition(m_window->getView().getSize().x, 200);
         buttons[0]->setCallback([this]()
         {
-            ld::Engine::getInstance().changeState(nullptr);
+            ld::Engine::getInstance().changeState(new PlayState(*m_window));
         });
 
         buttons[1]->setSize(sf::Vector2f(300, 300));
         buttons[1]->setPosition(buttons[0]->getPosition().x, buttons[0]->getPosition().y + 350);
         buttons[1]->setCallback([this]()
         {
-            ld::Engine::getInstance().changeState(nullptr);
+            ld::Engine::getInstance().changeState(new PlayState(*m_window));
         });
 
         for (auto& i : buttons)
