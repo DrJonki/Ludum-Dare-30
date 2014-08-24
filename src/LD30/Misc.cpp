@@ -35,3 +35,13 @@ std::string ld::Misc::getHomeDir(const std::string& folder)
 
     return path;
 }
+
+float ld::Misc::getRandomFloat(const float min, const float max)
+{
+    return (min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min))));
+}
+
+int ld::Misc::getRandomInt(const int min, const int max)
+{
+    return (min + static_cast<int>(rand()) / (static_cast<int>(RAND_MAX / (max - min))));
+}
