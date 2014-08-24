@@ -69,6 +69,7 @@ bool ld::Engine::init()
 bool ld::Engine::mainLoop()
 {
     sf::Clock frameClock;
+	float timer = 0;
 
     while (!m_shouldExit && m_currentState)
     {
@@ -80,7 +81,12 @@ bool ld::Engine::mainLoop()
         }
 
         // Call update.
-        m_currentState->update(m_paused ? 0.f : frameClock.restart().asSeconds());
+		timer += frameClock.restart().asSeconds();
+		if (timer > (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) ? 0.05f : 0.00015f))
+		{
+			m_currentState->update(m_paused ? 0.f : timer);
+			timer = 0;
+		}
 
         // Draw
         m_window->clear();
