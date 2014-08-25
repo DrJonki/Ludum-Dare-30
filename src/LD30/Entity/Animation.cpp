@@ -76,7 +76,7 @@ bool ld::Animation::hasFinished() const
     return m_finished;
 }
 
-void ld::Animation::setLooping(const float loop)
+void ld::Animation::setLooping(const bool loop)
 {
     m_loop = loop;
 }

@@ -31,7 +31,7 @@ namespace ld
 
         bool hasFinished() const;
 
-        void setLooping(const float loop);
+        void setLooping(const bool loop);
 
 
     private:

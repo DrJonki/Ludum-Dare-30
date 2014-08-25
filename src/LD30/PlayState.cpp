@@ -134,11 +134,11 @@ void ld::PlayState::update(const float delta)
         Engine::getInstance().setPaused(true);
         m_menuState = Pause;
     }
-    else if (false) // Player's lives < 1
+/*    else if (false) // Player's lives < 1
     {
         m_menuState = GameOver;
     }
-
+*/
 	m_player.update(delta);
 	collisionCheck();
 	for (int i = 0; i < (int)m_enemies.size(); ++i)
