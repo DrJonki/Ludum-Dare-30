@@ -14,7 +14,10 @@ ld::MainMenuState::MainMenuState(sf::RenderWindow& window)
     : GameState(window),
       m_menuState(Main)
 {
-
+    m_menus[Main].reset(new MainMenu(*m_window));
+    m_menus[Main]->setDelta(1.f);
+    m_menus[Play].reset(new PlayMenu(*m_window));
+    m_menus[Credits].reset(new CreditsMenu(*m_window));
 }
 
 ld::MainMenuState::~MainMenuState()
@@ -29,11 +32,9 @@ bool ld::MainMenuState::init()
     if (m_music.openFromFile("assets/Audio/Music/Abstraction - Ludum Dare 28 - First Track.wav"))
         m_music.play();
 
+    // Menus have already been created in the constructor, so no need to do it here.
     // Main menu
     {
-        m_menus[Main].reset(new MainMenu(*m_window));
-        m_menus[Main]->setDelta(1.f);
-
         std::array<std::unique_ptr<Button>, 3> buttons;
         for (auto& i : buttons)
         {
@@ -102,8 +103,6 @@ bool ld::MainMenuState::init()
 
     // Play menu
     {
-        m_menus[Play].reset(new PlayMenu(*m_window));
-
         std::array<std::unique_ptr<Button>, 3> buttons;
         for (auto& i : buttons)
         {
@@ -153,8 +152,6 @@ bool ld::MainMenuState::init()
 
     // Credits menu
     {
-        m_menus[Credits].reset(new CreditsMenu(*m_window));
-
         m_menus[Credits]->addElement(new Button(backButton));
     }
 
@@ -174,7 +171,7 @@ void ld::MainMenuState::update(const float delta)
             else
                 menu.fadeOutStep(delta);
 
-            if (menu.getDelta() >= 1.f)
+            if (menu.getDelta() >= 0.5f)
             {
                 menu.update(delta);
             }

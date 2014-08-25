@@ -1,12 +1,13 @@
 #include <LD30/PlayState.hpp>
 #include <LD30/ResourceManager.hpp>
 #include <LD30/Engine.hpp>
+#include <LD30/Menu/BaseMenu.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window.hpp>
 
 ld::PlayState::PlayState(sf::RenderWindow& window)
 	: GameState(window),
-	m_player(window)
+	  m_player(window)
 {
 
 }
@@ -30,12 +31,6 @@ bool ld::PlayState::init()
 	m_player.m_shield.setTexture(tex);
 	m_player.m_shield.setSize(sf::Vector2f(128.f, 128.f));
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
-
-    /*tex = ldResource.getTexture("assets/Graphics/Effects/electricity_chain.png");
-    tex->setSmooth(true);
-    m_player.m_rope.setTexture(tex);
-    m_player.m_shield.setSize(sf::Vector2f(100.f, static_cast<float>(tex->getSize().y)));
-    m_player.m_rope.setOrigin(tex->getSize().x / 2.f, static_cast<float>(tex->getSize().y));*/
 	
 	//Enemy
 	addEnemy();
@@ -130,6 +125,10 @@ void ld::PlayState::setDifficulty(int dif)
 		m_minTime = 5.f;
 		startLives = 3;
 		break;
+    default:
+        m_Time = 15.f;
+        m_minTime = 7.f;
+        startLives = 5;
 	}
 }
 

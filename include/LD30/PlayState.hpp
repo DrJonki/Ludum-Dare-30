@@ -9,6 +9,8 @@
 
 namespace ld
 {
+    class BaseMenu;
+
 	class PlayState : public GameState
 	{
 	public:
@@ -38,5 +40,15 @@ namespace ld
 		sf::Vector2f getRandSpawnPos();
 		bool ifCollide(sf::RectangleShape A, sf::RectangleShape B);
 		void collisionCheck();
+
+
+        enum MenuState
+        {
+            Pause,
+            GameOver,
+            Count
+        };
+
+        std::array<std::unique_ptr<BaseMenu>, Count> m_menus;
 	};
 }
