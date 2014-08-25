@@ -333,6 +333,9 @@ void ld::PlayState::draw()
 
 void ld::PlayState::addEnemy()
 {
+    if (m_player.getLives() < 1)
+        return;
+
 	m_enemies.emplace_back(*m_window);
 	auto& ref = m_enemies.back();
 
