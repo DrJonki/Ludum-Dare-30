@@ -131,11 +131,14 @@ void ld::Player::shieldRubberband(const float delta)
 	const sf::Vector2f dif = (*this).getPosition() - m_shield.getPosition();
 	const float magSquared = dif.x*dif.x + dif.y*dif.y;
 	const sf::Vector2f norm = dif / magSquared;
-	const float amount = sqrt(magSquared - ropeLenghtSquared);
 
 	if (magSquared > ropeLenghtSquared)
 	{
-		m_shieldDir += norm * amount * rubberbandStrength * delta;
+		m_shieldDir += norm * sqrt(magSquared - ropeLenghtSquared) * rubberbandStrength * delta;
+	}
+	else if (magSquared < ropeLenghtSquared)
+	{
+		m_shieldDir -= norm * sqrt(ropeLenghtSquared - magSquared) * rubberbandStrength * delta;
 	}
 }
 
