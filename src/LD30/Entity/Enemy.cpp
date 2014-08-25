@@ -1,12 +1,14 @@
 #include <LD30/Entity/Enemy.hpp>
 #include <LD30/Entity/Player.hpp>
+#include <LD30/Misc.hpp>
 #include <cmath>
 #include <iostream>
 
 ld::Enemy::Enemy(sf::RenderWindow &window)
 :Entity(window),
 m_player(nullptr),
-m_useAnim(true)
+m_useAnim(true),
+m_speed(Misc::getRandomFloat(100.f, 150.f))
 {
 
 }
@@ -39,8 +41,8 @@ void ld::Enemy::move(const float delta)
     {
         sf::Vector2f toPosition = m_player->getPosition() - this->getPosition();
         toPosition /= std::sqrt(toPosition.x*toPosition.x + toPosition.y*toPosition.y);
-        const float speed = 50.f * delta;
-        auto pos = this->getPosition() + (toPosition*speed);
+        //const float speed = 500.f * delta;
+        auto pos = this->getPosition() + (toPosition*m_speed*delta);
         this->setPosition(pos);
     }
 }

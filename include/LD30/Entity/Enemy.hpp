@@ -21,5 +21,6 @@ namespace ld
 		Player* m_player;
 		Animation m_animation;
 		void move(const float delta);
+        float m_speed;
 	};
 }
