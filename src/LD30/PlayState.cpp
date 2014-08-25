@@ -84,7 +84,42 @@ bool ld::PlayState::init()
 
     // Game over menu
     {
+        std::array<std::unique_ptr<Button>, 2> buttons;
 
+        for (auto& i : buttons)
+        {
+            i.reset(new Button(*m_window));
+
+            i->setFillColor(sf::Color(255, 255, 255, 255));
+            i->setSound("assets/Audio/Sound Effects/menuselect.ogg");
+        }
+
+        const float buttonOffset = 50.f;
+
+        /****** Restart button ******/
+        auto tex = ldResource.getTexture("assets/Graphics/Menus/start.png");
+        buttons[0]->setTexture(tex);
+        buttons[0]->setSize(sf::Vector2f(tex->getSize()) / 1.2f);
+        buttons[0]->setPosition(100.f, 100.f);
+        buttons[0]->setCallback([this]()
+        {
+            auto ptr = new PlayState(*m_window);
+            ptr->setDifficulty(m_difficulty);
+
+            Engine::getInstance().changeState(ptr);
+            Engine::getInstance().setPaused(false);
+        });
+
+        /****** Restart button ******/
+        tex = ldResource.getTexture("assets/Graphics/Menus/quit.png");
+        buttons[1]->setTexture(tex);
+        buttons[1]->setSize(buttons[0]->getSize());
+        buttons[1]->setPosition(100.f, buttons[0]->getPosition().y + buttons[0]->getSize().y + buttonOffset);
+        buttons[1]->setCallback([this]()
+        {
+            Engine::getInstance().changeState(new MainMenuState(*m_window));
+            Engine::getInstance().setPaused(false);
+        });
     }
 
 	//Player
@@ -134,10 +169,10 @@ void ld::PlayState::update(const float delta)
         Engine::getInstance().setPaused(true);
         m_menuState = Pause;
     }
-/*    else if (false) // Player's lives < 1
-    {
-        m_menuState = GameOver;
-    }
+    //else if () // Player's lives < 1
+    //{
+    //    m_menuState = GameOver;
+    //}
 */
 	m_player.update(delta);
 	collisionCheck();
