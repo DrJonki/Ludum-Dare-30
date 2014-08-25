@@ -13,7 +13,7 @@ namespace ld
 		Enemy(sf::RenderWindow &window);
 		~Enemy();
 		void update(const float dt) final override;
-		void setPlayer(Player &player);
+		void setPlayer(Player* player);
 		void setAnimation(Animation &animation);
 
 		bool m_useAnim;
@@ -21,5 +21,6 @@ namespace ld
 		Player* m_player;
 		Animation m_animation;
 		void move(const float delta);
+        float m_speed;
 	};
 }

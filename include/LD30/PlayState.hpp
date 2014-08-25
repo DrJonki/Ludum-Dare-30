@@ -5,6 +5,7 @@
 #include <LD30/Entity/Enemy.hpp>
 #include <LD30/Entity/Explosion.hpp>
 #include <SFML/Audio/Music.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <array>
 #include <memory>
 #include <vector>
@@ -40,12 +41,20 @@ namespace ld
 		std::vector<Enemy> m_enemies;
 		std::vector<Explosion> m_explosions;
 		float m_spawnTime, m_Time, m_minTime;
-		int m_difficulty, m_startLives;
+		int m_difficulty;
 		bool easterEgg;
 		sf::Vector2f getRandSpawnPos();
 		void collisionCheck();
         sf::Music m_music;
+        sf::RectangleShape m_background;
+        sf::RectangleShape m_lifeIcon;
+        sf::RectangleShape m_killIcon;
+        unsigned int m_kills;
+        sf::Text m_scoreText;
+        sf::Text m_killsText;
 
+        unsigned int m_score;
+        sf::Clock m_scoreClock;
 
         enum MenuState
         {

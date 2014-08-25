@@ -1,6 +1,7 @@
 #pragma once
 
 #include <LD30/Menu/BaseMenu.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 
 namespace ld
@@ -21,6 +22,11 @@ namespace ld
         void update(const float delta) final override;
 
         void draw() final override;
+
+
+    private:
+
+        sf::RectangleShape m_shade;
 
     };
 }
