@@ -31,6 +31,7 @@ bool ld::MainMenuState::init()
     m_background.setTexture(ldResource.getTexture("assets/Graphics/Menus/main_menu.png"));
     if (m_music.openFromFile("assets/Audio/Music/Abstraction - Ludum Dare 28 - First Track.wav"))
         m_music.play();
+    m_music.setLoop(true);
 
     // Menus have already been created in the constructor, so no need to do it here.
     // Main menu

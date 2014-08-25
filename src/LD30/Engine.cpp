@@ -36,6 +36,7 @@ ld::Engine::Engine()
       m_nextState         (nullptr),
       m_window            (nullptr),
       m_paused            (false),
+      m_pauseButtonPressed(false),
       m_shouldExit        (false)
 {
 
@@ -93,12 +94,19 @@ bool ld::Engine::mainLoop()
         m_currentState->draw();
         m_window->display();
 
+        m_pauseButtonPressed = false;
+
         // Poll events
         sf::Event e;
         while (m_window->pollEvent(e))
         {
             if (e.type == sf::Event::Closed)
                 m_shouldExit = true;
+            else if (e.type == sf::Event::KeyPressed)
+            {
+                if (e.key.code == sf::Keyboard::Escape)
+                    m_pauseButtonPressed = true;
+            }
         }
     }
 
@@ -128,4 +136,9 @@ bool ld::Engine::isPaused()
 void ld::Engine::setPaused(const bool paused)
 {
     m_paused = paused;
+}
+
+bool ld::Engine::pauseButtonPressed() const
+{
+    return m_pauseButtonPressed;
 }

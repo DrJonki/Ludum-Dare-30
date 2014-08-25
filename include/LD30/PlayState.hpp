@@ -1,11 +1,12 @@
 #pragma once
 
 #include <LD30/GameState.hpp>
+#include <LD30/Entity/Player.hpp>
+#include <LD30/Entity/Enemy.hpp>
+#include <SFML/Audio/Music.hpp>
 #include <array>
 #include <memory>
 #include <vector>
-#include <LD30/Entity/Player.hpp>
-#include <LD30/Entity/Enemy.hpp>
 
 namespace ld
 {
@@ -38,8 +39,8 @@ namespace ld
 		int difficulty, startLives;
 		bool easterEgg;
 		sf::Vector2f getRandSpawnPos();
-		bool ifCollide(sf::RectangleShape A, sf::RectangleShape B);
 		void collisionCheck();
+        sf::Music m_music;
 
 
         enum MenuState
@@ -50,5 +51,6 @@ namespace ld
         };
 
         std::array<std::unique_ptr<BaseMenu>, Count> m_menus;
+        MenuState m_menuState;
 	};
 }

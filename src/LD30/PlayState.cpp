@@ -1,16 +1,21 @@
 #include <LD30/PlayState.hpp>
 #include <LD30/ResourceManager.hpp>
 #include <LD30/Engine.hpp>
-#include <LD30/Menu/BaseMenu.hpp>
+#include <LD30/Menu/PauseMenu.hpp>
+#include <LD30/Menu/GameOverMenu.hpp>
+#include <LD30/Menu/Button.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
 
 ld::PlayState::PlayState(sf::RenderWindow& window)
 	: GameState(window),
-	  m_player(window)
+	  m_player(window),
+      m_menuState(Pause)
 {
-
+    m_menus[Pause].reset(new PauseMenu(*m_window));
+    m_menus[Pause]->setDelta(1.f);
+    m_menus[GameOver].reset(new GameOverMenu(*m_window));
 }
 
 ld::PlayState::~PlayState()
@@ -20,6 +25,30 @@ ld::PlayState::~PlayState()
 
 bool ld::PlayState::init()
 {
+    if (m_music.openFromFile("assets/Audio/Music/Abstraction - Ludum Dare 28 - First Track.wav"))
+        m_music.play();
+    m_music.setLoop(true);
+
+    // Pause menu
+    {
+        std::array<std::unique_ptr<Button>, 3> buttons;
+
+        for (auto& i : buttons)
+        {
+            i.reset(new Button(*m_window));
+
+            i->setFillColor(sf::Color(255, 255, 255, 255));
+            i->setSound("assets/Audio/Sound Effects/menuselect.ogg");
+        }
+
+
+    }
+
+    // Game over menu
+    {
+
+    }
+
 	//Player
 	auto tex = ldResource.getTexture("assets/Graphics/Player and shield planets/Player_Base.png");
 	tex->setSmooth(true);
@@ -41,6 +70,11 @@ bool ld::PlayState::init()
 
 void ld::PlayState::update(const float delta)
 {
+    if (Engine::getInstance().pauseButtonPressed())
+    {
+        Engine::getInstance().setPaused(!Engine::getInstance().isPaused());
+    }
+
 	m_player.update(delta);
 	collisionCheck();
 	for (int i = 0; i < (int)m_enemies.size(); ++i)
@@ -55,6 +89,24 @@ void ld::PlayState::update(const float delta)
 		m_Time -= delta / 100;
 	else
 		m_Time = m_minTime;
+
+    for (std::size_t i = 0; i < m_menus.size(); ++i)
+    {
+        if (m_menus[i])
+        {
+            auto& menu = *m_menus[i];
+
+            if (i == static_cast<unsigned int>(m_menuState))
+                menu.fadeInStep(delta);
+            else
+                menu.fadeOutStep(delta);
+
+            if (menu.getDelta() >= 0.5f)
+            {
+                menu.update(delta);
+            }
+        }
+    }
 }
 
 void ld::PlayState::draw()
@@ -64,6 +116,9 @@ void ld::PlayState::draw()
 	{
 		i.draw();
 	}
+
+    for (auto& i : m_menus)
+        i->draw();
 }
 
 void ld::PlayState::addEnemy()
@@ -160,6 +215,9 @@ sf::Vector2f ld::PlayState::getRandSpawnPos()
 	return sf::Vector2f(0,0);
 }
 
+// Prototype
+bool ifCollide(const sf::RectangleShape&, const sf::RectangleShape&);
+
 void ld::PlayState::collisionCheck()
 {
 	//for (auto &i : m_enemies)
@@ -180,7 +238,7 @@ void ld::PlayState::collisionCheck()
 	}
 }
 
-bool ld::PlayState::ifCollide(sf::RectangleShape A, sf::RectangleShape B)
+bool ifCollide(const sf::RectangleShape& A, const sf::RectangleShape& B)
 {
 	float aRad = A.getGlobalBounds().height;
 	float bRad = B.getGlobalBounds().height;

@@ -44,6 +44,8 @@ namespace ld
 
         void setPaused(const bool paused);
 
+        bool pauseButtonPressed() const;
+
 
     private:
 
@@ -51,6 +53,7 @@ namespace ld
         std::unique_ptr<GameState> m_nextState;
         std::unique_ptr<sf::RenderWindow> m_window;
         bool m_paused;
+        bool m_pauseButtonPressed;
         bool m_shouldExit;
     };
 }
