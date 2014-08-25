@@ -32,11 +32,11 @@ void ld::PlayMenu::fadeInStep(const float delta)
         but->setPosition(std::max(basePos, startPos.x - (getDelta() * difference + (static_cast<float>(m_elements.size() - 1) * offset)) + (i * offset)),
                          but->getPosition().y);
         but->setFillColor(sf::Color(255, 255, 255,
-            static_cast<char>(getDelta() * (1.f - (but->getPosition().x - basePos) / difference) * 255.f)));
+            static_cast<unsigned char>(getDelta() * (1.f - (but->getPosition().x - basePos) / difference) * 255.f)));
     }
 
     static_cast<Button*>(m_elements.back().get())->setFillColor(sf::Color(255, 255, 255,
-                                                                          static_cast<char>(getDelta() * 255.f)));
+        static_cast<unsigned char>(getDelta() * 255.f)));
 }
 
 void ld::PlayMenu::fadeOutStep(const float delta)

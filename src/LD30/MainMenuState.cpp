@@ -1,6 +1,7 @@
 #include <LD30/MainMenuState.hpp>
 #include <LD30/Menu/MainMenu.hpp>
 #include <LD30/Menu/PlayMenu.hpp>
+#include <LD30/Menu/CreditsMenu.hpp>
 #include <LD30/Menu/Button.hpp>
 #include <LD30/ResourceManager.hpp>
 #include <LD30/Engine.hpp>
@@ -53,7 +54,7 @@ bool ld::MainMenuState::init()
         buttons[1]->setOrigin(originxOffset, buttons[1]->getSize().y / 2.f);
         buttons[1]->setCallback([this]()
         {
-            //m_menuState = Options;
+            m_menuState = Credits;
         });
 
         /****** Play button ******/
@@ -150,9 +151,11 @@ bool ld::MainMenuState::init()
         m_menus[Play]->addElement(new Button(backButton));
     }
 
-    // options menu
+    // Credits menu
     {
+        m_menus[Credits].reset(new CreditsMenu(*m_window));
 
+        m_menus[Credits]->addElement(new Button(backButton));
     }
 
     return true;

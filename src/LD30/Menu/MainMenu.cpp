@@ -28,7 +28,7 @@ void ld::MainMenu::fadeInStep(const float delta)
     for (auto& i : m_elements)
         static_cast<Button*>(i.get())->setScale(scale, scale);
 
-    m_backgroundShade.setFillColor(sf::Color(0, 0, 0, static_cast<char>(128.f - 128.f * getDelta())));
+    m_backgroundShade.setFillColor(sf::Color(0, 0, 0, static_cast<unsigned char>(128.f - 128.f * getDelta())));
 }
 
 void ld::MainMenu::fadeOutStep(const float delta)

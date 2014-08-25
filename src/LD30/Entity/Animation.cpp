@@ -1,4 +1,5 @@
 #include <LD30/Entity/Animation.hpp>
+#include <LD30/Engine.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 
@@ -33,7 +34,7 @@ void ld::Animation::setChangeTime(const float seconds)
 
 sf::IntRect ld::Animation::getRect() const
 {
-    if (m_running)
+    if (m_running && !Engine::getInstance().isPaused())
     {
         auto passed = static_cast<unsigned int>(m_clock.getElapsedTime().asSeconds() / m_changeTime);
 
