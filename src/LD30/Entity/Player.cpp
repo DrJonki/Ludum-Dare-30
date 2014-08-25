@@ -4,19 +4,32 @@
 #include <iostream>
 #include <cmath>
 
-const float speed = 450.f;
+
+//const float speed = 450.f;
+//const float maxspeed = 400.f;
+//const float drag = 0.8f;
+//const float friction = 80.f;
+//const float border = 80.f;
+//
+//const float ropeLenghtSquared = powf(175,2);
+//const float rubberbandStrength = 250.0f;
+//
+//const float shieldDrag = 0.5f;
+//const float shieldFriction = 0.5f;
+//const float shieldSpeedMultiplier =  5.f;
+
+const float speed = 1000.f;
 const float maxspeed = 400.f;
 const float drag = 0.8f;
 const float friction = 80.f;
 const float border = 80.f;
 
-const float ropeLenghtSquared = powf(175,2);
+const float ropeLenghtSquared = powf(175, 2);
 const float rubberbandStrength = 250.0f;
 
-const float shieldDrag = 0.5f;
+const float shieldDrag = 0.3f;
 const float shieldFriction = 0.5f;
-//const float shieldMassMultiplier = 15.f;
-const float shieldSpeedMultiplier = 5.f;
+const float shieldSpeedMultiplier = 10.f;
 
 sf::Vector2f normalize(sf::Vector2f vec)
 {
@@ -168,7 +181,7 @@ void ld::Player::chainMovement(const float delta)
 
 	m_chain.setTextureRect(sf::IntRect(0, static_cast<int>(time), 200, 400));
 
-	m_chain.setScale(sf::Vector2f(1.f/(magnitude/100.f),-magnitude / 200));
+	m_chain.setScale(sf::Vector2f(1.f/(magnitude/150.f + 0.4f),-magnitude / 200));
 	//m_chain.setOrigin(m_shield.getSize().x / 2, m_shield.getSize().y);
 	m_chain.setPosition(posA);
 
