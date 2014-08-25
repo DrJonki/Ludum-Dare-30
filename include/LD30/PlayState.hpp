@@ -36,7 +36,7 @@ namespace ld
 		Player m_player;
 		std::vector<Enemy> m_enemies;
 		float m_spawnTime, m_Time, m_minTime;
-		int difficulty, startLives;
+		int m_difficulty, m_startLives;
 		bool easterEgg;
 		sf::Vector2f getRandSpawnPos();
 		void collisionCheck();

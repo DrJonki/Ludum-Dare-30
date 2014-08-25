@@ -4,6 +4,7 @@
 #include <LD30/Menu/PauseMenu.hpp>
 #include <LD30/Menu/GameOverMenu.hpp>
 #include <LD30/Menu/Button.hpp>
+#include <LD30/MainMenuState.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
@@ -11,10 +12,10 @@
 ld::PlayState::PlayState(sf::RenderWindow& window)
 	: GameState(window),
 	  m_player(window),
-      m_menuState(Pause)
+      m_menuState(Count)
 {
     m_menus[Pause].reset(new PauseMenu(*m_window));
-    m_menus[Pause]->setDelta(1.f);
+    //m_menus[Pause]->setDelta(1.f);
     m_menus[GameOver].reset(new GameOverMenu(*m_window));
 }
 
@@ -41,7 +42,46 @@ bool ld::PlayState::init()
             i->setSound("assets/Audio/Sound Effects/menuselect.ogg");
         }
 
+        const float buttonOffset = 50.f;
 
+        /****** Resume button ******/
+        auto tex = ldResource.getTexture("assets/Graphics/Menus/start.png");
+        buttons[0]->setTexture(tex);
+        buttons[0]->setSize(sf::Vector2f(tex->getSize()) / 1.2f);
+        buttons[0]->setPosition(100.f, 100.f);
+        buttons[0]->setCallback([this]()
+        {
+            m_menuState = Count;
+            Engine::getInstance().setPaused(false);
+        });
+
+        /****** Restart button ******/
+        tex = ldResource.getTexture("assets/Graphics/Menus/options.png");
+        buttons[1]->setTexture(tex);
+        buttons[1]->setSize(buttons[0]->getSize());
+        buttons[1]->setPosition(100.f, buttons[0]->getPosition().y + buttons[0]->getSize().y + buttonOffset);
+        buttons[1]->setCallback([this]()
+        {
+            auto ptr = new PlayState(*m_window);
+            ptr->setDifficulty(m_difficulty);
+
+            Engine::getInstance().changeState(ptr);
+            Engine::getInstance().setPaused(false);
+        });
+
+        /****** Exit button ******/
+        tex = ldResource.getTexture("assets/Graphics/Menus/quit.png");
+        buttons[2]->setTexture(tex);
+        buttons[2]->setSize(buttons[1]->getSize());
+        buttons[2]->setPosition(100.f, buttons[1]->getPosition().y + buttons[1]->getSize().y + buttonOffset);
+        buttons[2]->setCallback([this]()
+        {
+            Engine::getInstance().changeState(new MainMenuState(*m_window));
+            Engine::getInstance().setPaused(false);
+        });
+
+        for (auto& i : buttons)
+            m_menus[Pause]->addElement(i.release());
     }
 
     // Game over menu
@@ -62,6 +102,24 @@ bool ld::PlayState::init()
 	m_player.m_shield.setSize(sf::Vector2f(128.f, 128.f));
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
 	
+    switch (m_difficulty)
+    {
+        case 2:
+            m_Time = 13.f;
+            m_minTime = 6.f;
+            m_startLives = 4;
+            break;
+        case 3:
+            m_Time = 10.f;
+            m_minTime = 5.f;
+            m_startLives = 3;
+            break;
+        default:
+            m_Time = 15.f;
+            m_minTime = 7.f;
+            m_startLives = 5;
+    }
+
 	//Enemy
 	addEnemy();
 
@@ -70,9 +128,14 @@ bool ld::PlayState::init()
 
 void ld::PlayState::update(const float delta)
 {
-    if (Engine::getInstance().pauseButtonPressed())
+    if (Engine::getInstance().pauseButtonPressed() && !Engine::getInstance().isPaused())
     {
-        Engine::getInstance().setPaused(!Engine::getInstance().isPaused());
+        Engine::getInstance().setPaused(true);
+        m_menuState = Pause;
+    }
+    else if (false) // Player's lives < 1
+    {
+        m_menuState = GameOver;
     }
 
 	m_player.update(delta);
@@ -82,7 +145,7 @@ void ld::PlayState::update(const float delta)
 		m_enemies[i].setPlayer(m_player);
 		m_enemies[i].update(delta);
 	}
-
+    //std::cout << delta << std::endl;
 	m_spawnTime += delta;
 	countTimeForEnemies();
 	if (m_Time > m_minTime)
@@ -95,15 +158,16 @@ void ld::PlayState::update(const float delta)
         if (m_menus[i])
         {
             auto& menu = *m_menus[i];
+            const float orDelta = Engine::getInstance().getDeltaOverride();
 
             if (i == static_cast<unsigned int>(m_menuState))
-                menu.fadeInStep(delta);
+                menu.fadeInStep(orDelta);
             else
-                menu.fadeOutStep(delta);
+                menu.fadeOutStep(orDelta);
 
             if (menu.getDelta() >= 0.5f)
             {
-                menu.update(delta);
+                menu.update(orDelta);
             }
         }
     }
@@ -159,34 +223,14 @@ void ld::PlayState::countTimeForEnemies()
 	if (m_Time <= m_spawnTime)
 	{
 		m_spawnTime = 0;
+        std::cout << m_spawnTime << std::endl;
 		addEnemy();
 	}
 }
 
 void ld::PlayState::setDifficulty(int dif)
 {
-	switch (dif)
-	{
-	case 1:
-		m_Time = 15.f;
-		m_minTime = 7.f;
-		startLives = 5;
-		break;
-	case 2:
-		m_Time = 13.f;
-		m_minTime = 6.f;
-		startLives = 4;
-		break;
-	case 3:
-		m_Time = 10.f;
-		m_minTime = 5.f;
-		startLives = 3;
-		break;
-    default:
-        m_Time = 15.f;
-        m_minTime = 7.f;
-        startLives = 5;
-	}
+	m_difficulty = dif;
 }
 
 sf::Vector2f ld::PlayState::getRandSpawnPos()
@@ -226,7 +270,7 @@ void ld::PlayState::collisionCheck()
 		if (ifCollide(m_player, m_enemies[i]))
 		{
 			//Do stuff (explosion and shit
-			std::cout << "OUCH" << std::endl;
+			//std::cout << "OUCH" << std::endl;
 		}
 		if (ifCollide(m_player.m_shield, m_enemies[i]))
 		{
