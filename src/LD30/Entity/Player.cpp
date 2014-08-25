@@ -4,19 +4,19 @@
 #include <iostream>
 #include <cmath>
 
-const float speed = 250.f;
-const float maxspeed = 100.f;
+const float speed = 450.f;
+const float maxspeed = 400.f;
 const float drag = 0.8f;
 const float friction = 80.f;
 const float border = 80.f;
 
 const float ropeLenghtSquared = powf(150,2);
-const float rubberbandStrength = 100.0f;
+const float rubberbandStrength = 300.0f;
 
 const float shieldDrag = 0.3f;
 const float shieldFriction = 0.5f;
 const float shieldMassMultiplier = 10.f;
-const float shieldSpeedMultiplier = 1.f;
+const float shieldSpeedMultiplier = 5.f;
 
 sf::Vector2f normalize(sf::Vector2f vec)
 {
