@@ -40,8 +40,6 @@ bool ld::PlayState::init()
             i->setFillColor(sf::Color(255, 255, 255, 255));
             i->setSound("assets/Audio/Sound Effects/menuselect.ogg");
         }
-
-
     }
 
     // Game over menu
@@ -55,13 +53,16 @@ bool ld::PlayState::init()
 	m_player.setTexture(tex);
 	m_player.setSize(sf::Vector2f(128.f,128.f));
 	m_player.setOrigin(m_player.getSize().x / 2, m_player.getSize().y / 2);
+	//m_player.setPosition(500.f,500.f);
 
 	tex = ldResource.getTexture("assets/Graphics/Player and shield planets/Shield.png");
 	tex->setSmooth(true);
 	m_player.m_shield.setTexture(tex);
 	m_player.m_shield.setSize(sf::Vector2f(128.f, 128.f));
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
+	//m_player.m_shield.setPosition(m_player.getPosition() + sf::Vector2f(50.f,50.f));
 	
+
 	//Enemy
 	addEnemy();
 
@@ -82,7 +83,16 @@ void ld::PlayState::update(const float delta)
 		m_enemies[i].setPlayer(m_player);
 		m_enemies[i].update(delta);
 	}
-
+	for (std::size_t i = 0; i < m_explosions.size(); ++i)
+	{
+		m_explosions[i].update(delta);
+		if (m_explosions[i].hasSoundStopped())
+		{
+			m_explosions.erase(m_explosions.begin() + i);
+			--i;
+		}
+	}
+		
 	m_spawnTime += delta;
 	countTimeForEnemies();
 	if (m_Time > m_minTime)
@@ -112,13 +122,15 @@ void ld::PlayState::update(const float delta)
 void ld::PlayState::draw()
 {
 	m_player.draw();
-	for (auto &i:m_enemies)
-	{
-		i.draw();
-	}
 
+	for (auto &i:m_enemies)
+		i.draw();
+	
     for (auto& i : m_menus)
         i->draw();
+
+	for (auto &i : m_explosions)
+		i.draw();
 }
 
 void ld::PlayState::addEnemy()
@@ -149,7 +161,7 @@ void ld::PlayState::addEnemy()
 		ref.m_useAnim = false;
 		easterEgg = false;
 	}
-	ref.setSize(sf::Vector2f(256.f, 148.f));
+	ref.setSize(sf::Vector2f(148.f, 79.f));
 	ref.setOrigin(ref.getSize().x / 2, ref.getSize().y / 2);
 	ref.setPosition(getRandSpawnPos());
 }
@@ -225,15 +237,16 @@ void ld::PlayState::collisionCheck()
 	{
 		if (ifCollide(m_player, m_enemies[i]))
 		{
-			//Do stuff (explosion and shit
-			std::cout << "OUCH" << std::endl;
+			addExplosion(m_enemies[i].getPosition());
+			m_enemies.erase(m_enemies.begin() + i);
+			--i;
 		}
-		if (ifCollide(m_player.m_shield, m_enemies[i]))
+		else if (ifCollide(m_player.m_shield, m_enemies[i]))
 		{
+			addExplosion(m_enemies[i].getPosition());
 			m_enemies.erase(m_enemies.begin() + i);
 			--i;
 			std::cout << "BANG" << std::endl;
-			//Aliens explode
 		}
 	}
 }
@@ -251,4 +264,22 @@ bool ifCollide(const sf::RectangleShape& A, const sf::RectangleShape& B)
 	float magn = sqrt(diff.x*diff.x + diff.y*diff.y);
 
 	return magn <= length;
+}
+
+void ld::PlayState::addExplosion(sf::Vector2f pos)
+{
+	m_explosions.emplace_back(*m_window);
+
+	auto &ref = m_explosions.back();
+	auto tex = ldResource.getTexture("assets/Graphics/Effects/Explosion_sheet.png");
+	Animation anim;
+	anim.load(*tex, 4);
+	anim.setChangeTime(.09f);
+	anim.start();
+	ref.setAnimation(anim);
+	ref.setTexture(tex);
+	tex->setSmooth(true);
+	ref.setSize(sf::Vector2f(128.f, 128.f));
+	ref.setOrigin(ref.getSize().x / 2, ref.getSize().y / 2);
+	ref.setPosition(pos);
 }

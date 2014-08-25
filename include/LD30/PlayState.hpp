@@ -3,6 +3,7 @@
 #include <LD30/GameState.hpp>
 #include <LD30/Entity/Player.hpp>
 #include <LD30/Entity/Enemy.hpp>
+#include <LD30/Entity/Explosion.hpp>
 #include <SFML/Audio/Music.hpp>
 #include <array>
 #include <memory>
@@ -31,10 +32,13 @@ namespace ld
 
 		void setDifficulty(int dif);
 
+		void addExplosion(sf::Vector2f pos);
+
 	private:
 
 		Player m_player;
 		std::vector<Enemy> m_enemies;
+		std::vector<Explosion> m_explosions;
 		float m_spawnTime, m_Time, m_minTime;
 		int difficulty, startLives;
 		bool easterEgg;

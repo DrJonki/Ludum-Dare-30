@@ -87,6 +87,9 @@
     <ClCompile Include="..\..\src\LD30\Menu\Element.cpp">
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\LD30\Entity\Explosion.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\LD30\Settings.hpp">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\LD30\Menu\Button.hpp">
       <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\LD30\Entity\Explosion.hpp">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
