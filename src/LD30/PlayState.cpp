@@ -170,8 +170,8 @@ void ld::PlayState::collisionCheck()
 
 bool ld::PlayState::ifCollide(sf::RectangleShape A, sf::RectangleShape B)
 {
-	float aRad = A.getGlobalBounds.getSize().y;
-	float bRad = B.getGlobalBounds.getSize().y;
+	float aRad = A.getGlobalBounds().height;
+	float bRad = B.getGlobalBounds().height;
 	float length = aRad + bRad;
 
 	sf::Vector2f aPos = A.getPosition();
