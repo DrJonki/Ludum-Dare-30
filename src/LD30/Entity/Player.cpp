@@ -98,13 +98,13 @@ void ld::Player::movePlayer(const float delta)
 	const float mag = std::sqrt(m_direction.x*m_direction.x + m_direction.y*m_direction.y);
 	if (mag > maxspeed)
 	{
-		m_direction = m_direction / mag * maxspeed;
+		m_direction = normalize(m_direction) * maxspeed;
 	}
 	this->move(m_direction*delta);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 	{
-		m_direction -= (m_direction / mag) * friction * delta;
+        m_direction -= normalize(m_direction) * friction * delta;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
 	{
@@ -112,7 +112,7 @@ void ld::Player::movePlayer(const float delta)
 	}
 	else
 	{
-		m_direction -= (m_direction / mag) * friction * delta;
+		m_direction -= normalize(m_direction) * friction * delta;
 		m_direction *= 1 - drag * delta;
 	}
 }

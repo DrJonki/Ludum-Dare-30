@@ -112,7 +112,7 @@ bool ld::PlayState::init()
             Engine::getInstance().setPaused(false);
         });
 
-        /****** Restart button ******/
+        /****** Quit button ******/
         tex = ldResource.getTexture("assets/Graphics/Menus/quit.png");
         buttons[1]->setTexture(tex);
         buttons[1]->setSize(buttons[0]->getSize());
@@ -133,14 +133,14 @@ bool ld::PlayState::init()
 	m_player.setTexture(tex);
 	m_player.setSize(sf::Vector2f(128.f,128.f));
 	m_player.setOrigin(m_player.getSize().x / 2, m_player.getSize().y / 2);
-	//m_player.setPosition(500.f,500.f);
+	m_player.setPosition(m_window->getView().getCenter());
 
 	tex = ldResource.getTexture("assets/Graphics/Player and shield planets/Shield.png");
 	tex->setSmooth(true);
 	m_player.m_shield.setTexture(tex);
 	m_player.m_shield.setSize(sf::Vector2f(128.f, 128.f));
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
-	//m_player.m_shield.setPosition(m_player.getPosition() + sf::Vector2f(50.f,50.f));
+	m_player.m_shield.setPosition(m_player.getPosition() - m_player.getSize());
 	
     tex = ldResource.getTexture("assets/Graphics/Backgrounds/background.png");
     tex->setSmooth(true);
@@ -194,9 +194,6 @@ bool ld::PlayState::init()
 
 void ld::PlayState::update(const float delta)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-        m_player.setLives(0);
-
     if (Engine::getInstance().pauseButtonPressed() && !Engine::getInstance().isPaused())
     {
         Engine::getInstance().setPaused(true);
@@ -343,7 +340,6 @@ void ld::PlayState::countTimeForEnemies()
 	if (m_Time <= m_spawnTime)
 	{
 		m_spawnTime = 0;
-        std::cout << m_spawnTime << std::endl;
 		addEnemy();
 	}
 }
@@ -409,7 +405,6 @@ void ld::PlayState::collisionCheck()
 			addExplosion(m_enemies[i].getPosition());
 			m_enemies.erase(m_enemies.begin() + i);
 			--i;
-			std::cout << "BANG" << std::endl;
             m_score += m_difficulty;
             ++m_kills;
 			//Aliens explode
