@@ -9,6 +9,8 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 
+#include <cassert>
+
 ld::PlayState::PlayState(sf::RenderWindow& window)
 	: GameState(window),
 	  m_player(window),
@@ -169,20 +171,30 @@ bool ld::PlayState::init()
 
     switch (m_difficulty)
     {
-        case 2:
-            m_Time = 4.5f;
-            m_minTime = 2.f;
-            m_player.setLives(4);
-            break;
-        case 3:
-            m_Time = 3.5f;
-            m_minTime = 1.f;
-            m_player.setLives(3);
-            break;
-        default:
+        case 1:
             m_Time = 6.f;
             m_minTime = 3.f;
-            m_player.setLives(5);
+			m_player.setLives(5);
+			m_enemySpeed = 150.f;
+			m_enemySpeedMin = 100.f;
+			break;
+        case 2:
+            m_Time = 3.5f;
+            m_minTime = 1.f;
+            m_player.setLives(4);
+			m_enemySpeed = 185.f;
+			m_enemySpeedMin = 100.f;
+            break;
+        case 3:
+            m_Time = 2.5f;
+            m_minTime = 0.25f;
+			m_player.setLives(3);
+			m_enemySpeed = 225.f;
+			m_enemySpeedMin = 100.f;
+            break;
+		default:
+			assert(false);
+			break;
     }
 
     m_scoreClock.restart();
@@ -333,7 +345,7 @@ void ld::PlayState::draw()
 
 void ld::PlayState::addEnemy()
 {
-	m_enemies.emplace_back(*m_window);
+	m_enemies.emplace_back(*m_window, Misc::getRandomFloat(m_enemySpeedMin, m_enemySpeed));
 	auto& ref = m_enemies.back();
 
 	if (!easterEgg)

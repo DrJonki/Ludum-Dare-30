@@ -4,11 +4,11 @@
 #include <cmath>
 #include <iostream>
 
-ld::Enemy::Enemy(sf::RenderWindow &window)
+ld::Enemy::Enemy(sf::RenderWindow &window, const float speed)
 :Entity(window),
 m_player(nullptr),
 m_useAnim(true),
-m_speed(Misc::getRandomFloat(100.f, 150.f))
+m_speed(speed)
 {
 
 }

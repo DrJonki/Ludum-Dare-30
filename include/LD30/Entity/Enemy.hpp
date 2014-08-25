@@ -10,7 +10,7 @@ namespace ld
 	class Enemy : public Entity
 	{
 	public:
-		Enemy(sf::RenderWindow &window);
+		Enemy(sf::RenderWindow &window, const float speed);
 		~Enemy();
 		void update(const float dt) final override;
 		void setPlayer(Player* player);

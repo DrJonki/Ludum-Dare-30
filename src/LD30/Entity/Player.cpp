@@ -10,12 +10,12 @@ const float drag = 0.8f;
 const float friction = 80.f;
 const float border = 80.f;
 
-const float ropeLenghtSquared = powf(150,2);
-const float rubberbandStrength = 300.0f;
+const float ropeLenghtSquared = powf(175,2);
+const float rubberbandStrength = 250.0f;
 
-const float shieldDrag = 0.3f;
+const float shieldDrag = 0.5f;
 const float shieldFriction = 0.5f;
-const float shieldMassMultiplier = 10.f;
+//const float shieldMassMultiplier = 15.f;
 const float shieldSpeedMultiplier = 5.f;
 
 sf::Vector2f normalize(sf::Vector2f vec)
@@ -144,19 +144,8 @@ void ld::Player::shieldRubberband(const float delta)
 
 void ld::Player::shieldSlow(const float delta)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-	{
-		m_shieldDir -= normalize(m_shieldDir) * shieldFriction * delta;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
-	{
-		m_shieldDir *= 1 - shieldDrag * delta;
-	}
-	else
-	{
-		m_shieldDir -= normalize(m_shieldDir) * shieldFriction * delta;
-		m_shieldDir *= 1 - shieldDrag * delta;
-	}
+	m_shieldDir -= normalize(m_shieldDir) * shieldFriction * delta;
+	m_shieldDir *= 1 - shieldDrag * delta;
 }
 
 int ld::Player::getLives() const

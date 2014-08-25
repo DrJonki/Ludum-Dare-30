@@ -40,7 +40,7 @@ namespace ld
 		Player m_player;
 		std::vector<Enemy> m_enemies;
 		std::vector<Explosion> m_explosions;
-		float m_spawnTime, m_Time, m_minTime;
+		float m_spawnTime, m_Time, m_minTime, m_enemySpeed, m_enemySpeedMin;
 		int m_difficulty;
 		bool easterEgg;
 		sf::Vector2f getRandSpawnPos();
