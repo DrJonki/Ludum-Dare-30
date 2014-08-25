@@ -48,6 +48,7 @@ sf::IntRect ld::Animation::getRect() const
             if (!m_loop && m_currentFrame == 0)
             {
                 m_finished = true;
+                m_currentFrame = m_amount - 1;
             }
 
             m_clock.restart();
