@@ -437,6 +437,7 @@ void ld::PlayState::addExplosion(sf::Vector2f pos)
 	Animation anim;
 	anim.load(*tex, 4);
 	anim.setChangeTime(.09f);
+	anim.setLooping(false);
 	anim.start();
 	ref.setAnimation(anim);
 	ref.setTexture(tex);

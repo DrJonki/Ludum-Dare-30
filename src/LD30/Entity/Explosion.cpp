@@ -26,5 +26,6 @@ void ld::Explosion::setAnimation(Animation &animation)
 
 bool ld::Explosion::hasSoundStopped()
 {
-	return m_sound.getStatus() != sf::Sound::Status::Playing;
+	return (m_sound.getStatus() != sf::Sound::Status::Playing) && 
+		(m_animation.hasFinished());
 }
