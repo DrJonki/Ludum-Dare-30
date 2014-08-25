@@ -170,18 +170,18 @@ bool ld::PlayState::init()
     switch (m_difficulty)
     {
         case 2:
-            m_Time = 9.f;
+            m_Time = 4.5f;
             m_minTime = 2.f;
             m_player.setLives(4);
             break;
         case 3:
-            m_Time = 7.f;
+            m_Time = 3.5f;
             m_minTime = 1.f;
             m_player.setLives(3);
             break;
         default:
-            m_Time = 12.f;
-            m_minTime = 5.f;
+            m_Time = 6.f;
+            m_minTime = 3.f;
             m_player.setLives(5);
     }
 
