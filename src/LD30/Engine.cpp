@@ -35,6 +35,7 @@ ld::Engine::Engine()
     : m_currentState      (nullptr),
       m_nextState         (nullptr),
       m_window            (nullptr),
+      m_deltaValue        (0.f),
       m_paused            (false),
       m_pauseButtonPressed(false),
       m_shouldExit        (false)
@@ -82,7 +83,7 @@ bool ld::Engine::mainLoop()
         }
 
         // Call update.
-		timer += frameClock.restart().asSeconds();
+		timer += (m_deltaValue = frameClock.restart().asSeconds());
 		if (timer > (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) ? 0.05f : 0.00015f))
 		{
 			m_currentState->update(m_paused ? 0.f : timer);
@@ -141,4 +142,9 @@ void ld::Engine::setPaused(const bool paused)
 bool ld::Engine::pauseButtonPressed() const
 {
     return m_pauseButtonPressed;
+}
+
+float ld::Engine::getDeltaOverride() const
+{
+    return m_deltaValue;
 }

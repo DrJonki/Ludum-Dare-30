@@ -40,7 +40,7 @@ namespace ld
 		std::vector<Enemy> m_enemies;
 		std::vector<Explosion> m_explosions;
 		float m_spawnTime, m_Time, m_minTime;
-		int difficulty, startLives;
+		int m_difficulty, m_startLives;
 		bool easterEgg;
 		sf::Vector2f getRandSpawnPos();
 		void collisionCheck();

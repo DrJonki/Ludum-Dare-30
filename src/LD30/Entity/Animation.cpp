@@ -9,6 +9,8 @@ ld::Animation::Animation()
       m_amount(0),
       m_changeTime(0),
       m_running(false),
+      m_finished(false),
+      m_loop(true),
       m_currentFrame(0)
 {
 
@@ -34,7 +36,7 @@ void ld::Animation::setChangeTime(const float seconds)
 
 sf::IntRect ld::Animation::getRect() const
 {
-    if (m_running && !Engine::getInstance().isPaused())
+    if (m_running && !m_finished && !Engine::getInstance().isPaused())
     {
         auto passed = static_cast<unsigned int>(m_clock.getElapsedTime().asSeconds() / m_changeTime);
 
@@ -42,6 +44,11 @@ sf::IntRect ld::Animation::getRect() const
         {
             m_currentFrame += passed;
             m_currentFrame %= m_amount;
+
+            if (!m_loop && m_currentFrame == 0)
+            {
+                m_finished = true;
+            }
 
             m_clock.restart();
         }
@@ -62,5 +69,15 @@ void ld::Animation::start()
 void ld::Animation::stop()
 {
     m_running = false;
+}
+
+bool ld::Animation::hasFinished() const
+{
+    return m_finished;
+}
+
+void ld::Animation::setLooping(const float loop)
+{
+    m_loop = loop;
 }
 

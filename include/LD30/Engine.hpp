@@ -46,12 +46,15 @@ namespace ld
 
         bool pauseButtonPressed() const;
 
+        float getDeltaOverride() const;
+
 
     private:
 
         std::unique_ptr<GameState> m_currentState;
         std::unique_ptr<GameState> m_nextState;
         std::unique_ptr<sf::RenderWindow> m_window;
+        float m_deltaValue;
         bool m_paused;
         bool m_pauseButtonPressed;
         bool m_shouldExit;

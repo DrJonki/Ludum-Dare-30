@@ -29,6 +29,10 @@ namespace ld
 
         void stop();
 
+        bool hasFinished() const;
+
+        void setLooping(const float loop);
+
 
     private:
 
@@ -37,6 +41,8 @@ namespace ld
         unsigned int m_amount;
         float m_changeTime;
         bool m_running;
+        mutable bool m_finished;
+        bool m_loop;
         mutable unsigned int m_currentFrame;
 
     };
