@@ -195,6 +195,11 @@ bool ld::PlayState::init()
 
 void ld::PlayState::update(const float delta)
 {
+    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+    {
+        m_player.setLives(0);
+    }
+*/
     if (Engine::getInstance().pauseButtonPressed() && !Engine::getInstance().isPaused())
     {
         Engine::getInstance().setPaused(true);
@@ -288,17 +293,41 @@ void ld::PlayState::draw()
         }
 
         m_killIcon.setPosition(lastPos + m_lifeIcon.getGlobalBounds().width + offset * 8.f, firstPos);
+        m_killIcon.setFillColor(sf::Color(255, 255, 255, 255));
+        m_killIcon.setScale(1.f, 1.f);
         m_window->draw(m_killIcon);
 
         m_scoreText.setString("Score: " + std::to_string(m_score));
         m_scoreText.setPosition(firstPos + offset * 2.f, m_lifeIcon.getPosition().y + m_lifeIcon.getGlobalBounds().height + offset);
+        m_scoreText.setColor(sf::Color(255, 255, 255, 255));
+        m_scoreText.setScale(1.f, 1.f);
         m_window->draw(m_scoreText);
 
         m_killsText.setString(std::to_string(m_kills));
         m_killsText.setOrigin(m_killsText.getGlobalBounds().width / 2.f, m_killsText.getGlobalBounds().height / 2.f);
         m_killsText.setPosition(m_killIcon.getPosition().x + m_killIcon.getGlobalBounds().width + offset * 4.f,
                                 m_killIcon.getPosition().y + m_killIcon.getGlobalBounds().height / 2.f - offset * 2.f);
+        m_killsText.setColor(sf::Color(255, 255, 255, 255));
+        m_killsText.setScale(1.f, 1.f);
         m_window->draw(m_killsText);
+    }
+    else if (m_menuState == GameOver)
+    {
+        m_killIcon.setScale(2.f, 2.f);
+        const float menuDelta = m_menus[GameOver]->getDelta();
+        m_killIcon.setFillColor(sf::Color(255, 255, 255, static_cast<unsigned char>(menuDelta * 255.f)));
+        m_killsText.setScale(2.f, 2.f);
+        m_killsText.setColor(sf::Color(255, 255, 255, static_cast<unsigned char>(menuDelta * 255.f)));
+        m_scoreText.setScale(2.f, 2.f);
+        m_scoreText.setColor(sf::Color(255, 255, 255, static_cast<unsigned char>(menuDelta * 255.f)));
+
+        m_killIcon.setPosition(500, 150);
+        m_killsText.setPosition(800, 240);
+        m_scoreText.setPosition(500, 500);
+
+        m_window->draw(m_killIcon);
+        m_window->draw(m_killsText);
+        m_window->draw(m_scoreText);
     }
 }
 
