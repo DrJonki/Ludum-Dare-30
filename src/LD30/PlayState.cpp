@@ -173,7 +173,7 @@ void ld::PlayState::update(const float delta)
     //{
     //    m_menuState = GameOver;
     //}
-*/
+
 	m_player.update(delta);
 	collisionCheck();
 	for (int i = 0; i < (int)m_enemies.size(); ++i)
