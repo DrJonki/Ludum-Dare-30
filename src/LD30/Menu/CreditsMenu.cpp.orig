@@ -9,7 +9,11 @@ ld::CreditsMenu::CreditsMenu(sf::RenderWindow& window)
       m_globalPos(window.getView().getSize().y + 200.f)
 {
     sf::Texture* textures[4];
+<<<<<<< Updated upstream
+    textures[0] = ldResource.getTexture("assets/Graphics/Menus/face_meatbug.png");
+=======
     textures[0] = ldResource.getTexture("assets/Graphics/Menus/face_metabug.png");
+>>>>>>> Stashed changes
     textures[1] = ldResource.getTexture("assets/Graphics/Menus/face_eracage.png");
     textures[2] = ldResource.getTexture("assets/Graphics/Menus/face_nyyman.png");
     textures[3] = ldResource.getTexture("assets/Graphics/Menus/face_drjonki.png");
