@@ -32,6 +32,7 @@ bool ld::PlayState::init()
         m_music.play();
     m_music.setLoop(true);
 
+    const float buttonScale = 2.f;
     // Pause menu
     {
         std::array<std::unique_ptr<Button>, 3> buttons;
@@ -46,9 +47,9 @@ bool ld::PlayState::init()
         const float buttonOffset = 50.f;
 
         /****** Resume button ******/
-        auto tex = ldResource.getTexture("assets/Graphics/Menus/start.png");
+        auto tex = ldResource.getTexture("assets/Graphics/Menus/retry.png");
         buttons[0]->setTexture(tex);
-        buttons[0]->setSize(sf::Vector2f(tex->getSize()) / 1.2f);
+        buttons[0]->setSize(sf::Vector2f(tex->getSize()) * buttonScale);
         buttons[0]->setPosition(100.f, 100.f);
         buttons[0]->setCallback([this]()
         {
@@ -57,7 +58,7 @@ bool ld::PlayState::init()
         });
 
         /****** Restart button ******/
-        tex = ldResource.getTexture("assets/Graphics/Menus/options.png");
+        tex = ldResource.getTexture("assets/Graphics/Menus/restart.png");
         buttons[1]->setTexture(tex);
         buttons[1]->setSize(buttons[0]->getSize());
         buttons[1]->setPosition(100.f, buttons[0]->getPosition().y + buttons[0]->getSize().y + buttonOffset);
@@ -70,7 +71,7 @@ bool ld::PlayState::init()
         });
 
         /****** Exit button ******/
-        tex = ldResource.getTexture("assets/Graphics/Menus/quit.png");
+        tex = ldResource.getTexture("assets/Graphics/Menus/backToMenu.png");
         buttons[2]->setTexture(tex);
         buttons[2]->setSize(buttons[1]->getSize());
         buttons[2]->setPosition(100.f, buttons[1]->getPosition().y + buttons[1]->getSize().y + buttonOffset);
@@ -99,9 +100,9 @@ bool ld::PlayState::init()
         const float buttonOffset = 50.f;
 
         /****** Restart button ******/
-        auto tex = ldResource.getTexture("assets/Graphics/Menus/start.png");
+        auto tex = ldResource.getTexture("assets/Graphics/Menus/restart.png");
         buttons[0]->setTexture(tex);
-        buttons[0]->setSize(sf::Vector2f(tex->getSize()) / 1.2f);
+        buttons[0]->setSize(sf::Vector2f(tex->getSize()) * buttonScale);
         buttons[0]->setPosition(100.f, 100.f);
         buttons[0]->setCallback([this]()
         {
@@ -113,7 +114,7 @@ bool ld::PlayState::init()
         });
 
         /****** Quit button ******/
-        tex = ldResource.getTexture("assets/Graphics/Menus/quit.png");
+        tex = ldResource.getTexture("assets/Graphics/Menus/backToMenu.png");
         buttons[1]->setTexture(tex);
         buttons[1]->setSize(buttons[0]->getSize());
         buttons[1]->setPosition(100.f, buttons[0]->getPosition().y + buttons[0]->getSize().y + buttonOffset);
