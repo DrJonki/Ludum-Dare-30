@@ -21,7 +21,7 @@ void ld::GameOverMenu::fadeInStep(const float delta)
 {
     BaseMenu::fadeInStep(delta * stepMult);
 
-    m_shade.setFillColor(sf::Color(255, 0, 0, static_cast<unsigned char>(getDelta() * 80.f)));
+    m_shade.setFillColor(sf::Color(255, 0, 0, static_cast<unsigned char>(getDelta() * 50.f)));
 
     for (auto& i : m_elements)
         static_cast<Button*>(i.get())->setFillColor(sf::Color(255, 255, 255, static_cast<unsigned char>(getDelta() * 255.f)));

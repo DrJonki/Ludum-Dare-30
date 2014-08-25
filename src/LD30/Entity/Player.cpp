@@ -155,3 +155,13 @@ void ld::Player::shieldSlow(const float delta)
 		m_shieldDir *= 1 - shieldDrag * delta;
 	}
 }
+
+int ld::Player::getLives() const
+{
+    return m_lives;
+}
+
+void ld::Player::setLives(const int lives)
+{
+    m_lives = lives;
+}

@@ -26,6 +26,8 @@ ld::PlayState::~PlayState()
 
 bool ld::PlayState::init()
 {
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    
     if (m_music.openFromFile("assets/Audio/Music/Abstraction - Ludum Dare 28 - First Track.wav"))
         m_music.play();
     m_music.setLoop(true);
@@ -120,6 +122,9 @@ bool ld::PlayState::init()
             Engine::getInstance().changeState(new MainMenuState(*m_window));
             Engine::getInstance().setPaused(false);
         });
+
+        for (auto& i : buttons)
+            m_menus[GameOver]->addElement(i.release());
     }
 
 	//Player
@@ -137,24 +142,49 @@ bool ld::PlayState::init()
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
 	//m_player.m_shield.setPosition(m_player.getPosition() + sf::Vector2f(50.f,50.f));
 	
+    tex = ldResource.getTexture("assets/Graphics/Backgrounds/background.png");
+    tex->setSmooth(true);
+    m_background.setSize(m_window->getView().getSize());
+    m_background.setTexture(tex);
+
+    tex = ldResource.getTexture("assets/Graphics/Menus/healthcounter.png");
+    tex->setSmooth(true);
+    m_lifeIcon.setTexture(tex);
+    m_lifeIcon.setSize(sf::Vector2f(m_lifeIcon.getTexture()->getSize()));
+
+    tex = ldResource.getTexture("assets/Graphics/Menus/killcounter.png");
+    tex->setSmooth(true);
+    m_killIcon.setTexture(tex);
+    m_killIcon.setSize(sf::Vector2f(m_killIcon.getTexture()->getSize()));
+
+    auto font = ldResource.getFont("assets/Graphics/Roboto-Black.ttf");
+    m_scoreText.setFont(*font);
+    m_scoreText.setCharacterSize(50);
+    m_scoreText.setColor(sf::Color(255, 255, 255, 255));
+
+    m_killsText.setFont(*font);
+    m_killsText.setCharacterSize(65);
+    m_killsText.setColor(sf::Color(255, 255, 255, 255));
 
     switch (m_difficulty)
     {
         case 2:
-            m_Time = 13.f;
-            m_minTime = 6.f;
-            m_startLives = 4;
+            m_Time = 9.f;
+            m_minTime = 2.f;
+            m_player.setLives(4);
             break;
         case 3:
-            m_Time = 10.f;
-            m_minTime = 5.f;
-            m_startLives = 3;
+            m_Time = 7.f;
+            m_minTime = 1.f;
+            m_player.setLives(3);
             break;
         default:
-            m_Time = 15.f;
-            m_minTime = 7.f;
-            m_startLives = 5;
+            m_Time = 12.f;
+            m_minTime = 5.f;
+            m_player.setLives(5);
     }
+
+    m_scoreClock.restart();
 
 	//Enemy
 	addEnemy();
@@ -164,21 +194,31 @@ bool ld::PlayState::init()
 
 void ld::PlayState::update(const float delta)
 {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+        m_player.setLives(0);
+
     if (Engine::getInstance().pauseButtonPressed() && !Engine::getInstance().isPaused())
     {
         Engine::getInstance().setPaused(true);
         m_menuState = Pause;
     }
-    //else if () // Player's lives < 1
-    //{
-    //    m_menuState = GameOver;
-    //}
+    else if (m_player.getLives() < 1)
+    {
+        m_menuState = GameOver;
+    }
+
+    if (Engine::getInstance().isPaused())
+        m_scoreClock.restart();
+    else if (m_scoreClock.getElapsedTime().asSeconds() > 10.f)
+    {
+        ++m_score;
+        m_scoreClock.restart();
+    }
 
 	m_player.update(delta);
 	collisionCheck();
 	for (int i = 0; i < (int)m_enemies.size(); ++i)
 	{
-		m_enemies[i].setPlayer(m_player);
 		m_enemies[i].update(delta);
 	}
 	for (std::size_t i = 0; i < m_explosions.size(); ++i)
@@ -220,19 +260,48 @@ void ld::PlayState::update(const float delta)
 
 void ld::PlayState::draw()
 {
-	m_player.draw();
+    m_window->draw(m_background);
+
+    if (m_player.getLives() > 0)
+	    m_player.draw();
 
 	for (auto &i:m_enemies)
 	{
 		i.draw();
 	
-	}
+    }
+
+    for (auto &i : m_explosions)
+        i.draw();
 
     for (auto& i : m_menus)
         i->draw();
 
-	for (auto &i : m_explosions)
-		i.draw();
+    if (m_menuState == Count)
+    {
+        const float firstPos = 10.f;
+        const float offset = 10.f;
+        float lastPos = 0.f;
+
+        for (int i = 0; i < m_player.getLives(); ++i)
+        {
+            m_lifeIcon.setPosition(lastPos = (firstPos + (i * (m_lifeIcon.getGlobalBounds().width + offset)) + offset), firstPos);
+            m_window->draw(m_lifeIcon);
+        }
+
+        m_killIcon.setPosition(lastPos + m_lifeIcon.getGlobalBounds().width + offset * 8.f, firstPos);
+        m_window->draw(m_killIcon);
+
+        m_scoreText.setString("Score: " + std::to_string(m_score));
+        m_scoreText.setPosition(firstPos + offset * 2.f, m_lifeIcon.getPosition().y + m_lifeIcon.getGlobalBounds().height + offset);
+        m_window->draw(m_scoreText);
+
+        m_killsText.setString(std::to_string(m_kills));
+        m_killsText.setOrigin(m_killsText.getGlobalBounds().width / 2.f, m_killsText.getGlobalBounds().height / 2.f);
+        m_killsText.setPosition(m_killIcon.getPosition().x + m_killIcon.getGlobalBounds().width + offset * 4.f,
+                                m_killIcon.getPosition().y + m_killIcon.getGlobalBounds().height / 2.f - offset * 2.f);
+        m_window->draw(m_killsText);
+    }
 }
 
 void ld::PlayState::addEnemy()
@@ -266,6 +335,7 @@ void ld::PlayState::addEnemy()
 	ref.setSize(sf::Vector2f(148.f, 79.f));
 	ref.setOrigin(ref.getSize().x / 2, ref.getSize().y / 2);
 	ref.setPosition(getRandSpawnPos());
+    ref.setPlayer(&m_player);
 }
 
 void ld::PlayState::countTimeForEnemies()
@@ -322,6 +392,17 @@ void ld::PlayState::collisionCheck()
 			addExplosion(m_enemies[i].getPosition());
 			m_enemies.erase(m_enemies.begin() + i);
 			--i;
+            m_player.setLives(m_player.getLives() - 1);
+
+            if (m_player.getLives() < 1)
+            {
+                addExplosion(m_player.getPosition());
+                
+                for (auto& i : m_enemies)
+                    i.setPlayer(nullptr);
+
+                break;
+            }
 		}
 		else if (ifCollide(m_player.m_shield, m_enemies[i]))
 		{
@@ -329,6 +410,8 @@ void ld::PlayState::collisionCheck()
 			m_enemies.erase(m_enemies.begin() + i);
 			--i;
 			std::cout << "BANG" << std::endl;
+            m_score += m_difficulty;
+            ++m_kills;
 			//Aliens explode
 		}
 	}

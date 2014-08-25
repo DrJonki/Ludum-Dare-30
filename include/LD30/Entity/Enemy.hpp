@@ -13,7 +13,7 @@ namespace ld
 		Enemy(sf::RenderWindow &window);
 		~Enemy();
 		void update(const float dt) final override;
-		void setPlayer(Player &player);
+		void setPlayer(Player* player);
 		void setAnimation(Animation &animation);
 
 		bool m_useAnim;
