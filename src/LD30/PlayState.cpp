@@ -31,11 +31,11 @@ bool ld::PlayState::init()
 	m_player.m_shield.setSize(sf::Vector2f(128.f, 128.f));
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
 
-    tex = ldResource.getTexture("assets/Graphics/Effects/electricity_chain.png");
+    /*tex = ldResource.getTexture("assets/Graphics/Effects/electricity_chain.png");
     tex->setSmooth(true);
     m_player.m_rope.setTexture(tex);
     m_player.m_shield.setSize(sf::Vector2f(100.f, static_cast<float>(tex->getSize().y)));
-    m_player.m_rope.setOrigin(tex->getSize().x / 2.f, static_cast<float>(tex->getSize().y));
+    m_player.m_rope.setOrigin(tex->getSize().x / 2.f, static_cast<float>(tex->getSize().y));*/
 	
 	//Enemy
 	addEnemy();

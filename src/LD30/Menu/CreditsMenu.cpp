@@ -10,7 +10,7 @@ ld::CreditsMenu::CreditsMenu(sf::RenderWindow& window)
 {
     sf::Texture* textures[4];
     textures[0] = ldResource.getTexture("assets/Graphics/Menus/face_meatbug.png");
-    textures[1] = ldResource.getTexture("assets/Graphics/Menus/face_nyyman.png");
+    textures[1] = ldResource.getTexture("assets/Graphics/Menus/face_eracage.png");
     textures[2] = ldResource.getTexture("assets/Graphics/Menus/face_nyyman.png");
     textures[3] = ldResource.getTexture("assets/Graphics/Menus/face_drjonki.png");
 
