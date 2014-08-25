@@ -367,10 +367,10 @@ sf::Vector2f ld::PlayState::getRandSpawnPos()
 		return sf::Vector2f(ref.getSize().x + 300, ld::Misc::getRandomFloat(0, ref.getSize().y));
 		break;
 	case 3: //Top
-		return sf::Vector2f(ld::Misc::getRandomFloat(0, ref.getSize().x), -ref.getSize().y - 300);
+		return sf::Vector2f(ld::Misc::getRandomFloat(0, ref.getSize().x), -300);
 		break;
 	case 4: //Bottom
-		return sf::Vector2f(ld::Misc::getRandomFloat(0, ref.getSize().y), ref.getSize().y + 300);
+		return sf::Vector2f(ld::Misc::getRandomFloat(0, ref.getSize().x), ref.getSize().y + 300);
 		break;
 	}
 	return sf::Vector2f(0,0);
