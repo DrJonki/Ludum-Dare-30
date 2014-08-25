@@ -5,7 +5,8 @@
 
 ld::Enemy::Enemy(sf::RenderWindow &window)
 :Entity(window),
-m_player(nullptr)
+m_player(nullptr),
+m_useAnim(true)
 {
 
 }
@@ -18,7 +19,8 @@ ld::Enemy::~Enemy()
 void ld::Enemy::update(const float delta)
 {
 	move(delta);
-	this->setTextureRect(m_animation.getRect());
+	if (m_useAnim)
+		this->setTextureRect(m_animation.getRect());
 }
 
 void ld::Enemy::setPlayer(Player &player)
