@@ -4,6 +4,7 @@
 #include <LD30/Menu/BaseMenu.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window.hpp>
+#include <iostream>
 
 ld::PlayState::PlayState(sf::RenderWindow& window)
 	: GameState(window),
@@ -41,6 +42,7 @@ bool ld::PlayState::init()
 void ld::PlayState::update(const float delta)
 {
 	m_player.update(delta);
+	collisionCheck();
 	for (int i = 0; i < (int)m_enemies.size(); ++i)
 	{
 		m_enemies[i].setPlayer(m_player);
@@ -160,14 +162,19 @@ sf::Vector2f ld::PlayState::getRandSpawnPos()
 
 void ld::PlayState::collisionCheck()
 {
-	for (auto &i : m_enemies)
+	//for (auto &i : m_enemies)
+	for (std::size_t i = 0; i < m_enemies.size(); ++i)
 	{
-		if (ifCollide(m_player, i))
+		if (ifCollide(m_player, m_enemies[i]))
 		{
 			//Do stuff (explosion and shit
+			std::cout << "OUCH" << std::endl;
 		}
-		if (ifCollide(m_player.m_shield, i))
+		if (ifCollide(m_player.m_shield, m_enemies[i]))
 		{
+			m_enemies.erase(m_enemies.begin() + i);
+			--i;
+			std::cout << "BANG" << std::endl;
 			//Aliens explode
 		}
 	}
@@ -177,13 +184,13 @@ bool ld::PlayState::ifCollide(sf::RectangleShape A, sf::RectangleShape B)
 {
 	float aRad = A.getGlobalBounds().height;
 	float bRad = B.getGlobalBounds().height;
-	float length = aRad + bRad;
+	float length = (aRad + bRad)/2.f;
 
 	sf::Vector2f aPos = A.getPosition();
 	sf::Vector2f bPos = B.getPosition();
 	sf::Vector2f diff = aPos - bPos;
 
-	float magn = diff.x*diff.x + diff.y*diff.y;
+	float magn = sqrt(diff.x*diff.x + diff.y*diff.y);
 
 	return magn <= length;
 }
