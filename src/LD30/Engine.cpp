@@ -58,7 +58,7 @@ ld::Engine& ld::Engine::getInstance()
 
 bool ld::Engine::init()
 {
-    ld::Settings::init(ld::Misc::getHomeDir("LD30") + "settings.json");
+    ld::Settings::init("settings.json");
 
     m_window.reset(openWindow(nullptr));
     
