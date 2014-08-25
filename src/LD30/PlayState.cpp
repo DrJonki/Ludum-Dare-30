@@ -345,7 +345,10 @@ void ld::PlayState::draw()
 
 void ld::PlayState::addEnemy()
 {
-	m_enemies.emplace_back(*m_window, Misc::getRandomFloat(m_enemySpeedMin, m_enemySpeed));
+    if (m_player.getLives() < 1)
+        return;
+        
+    m_enemies.emplace_back(*m_window, Misc::getRandomFloat(m_enemySpeedMin, m_enemySpeed));
 	auto& ref = m_enemies.back();
 
 	if (!easterEgg)
