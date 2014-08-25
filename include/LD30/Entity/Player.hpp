@@ -16,6 +16,7 @@ namespace ld
         void setLives(const int lives);
 
 		sf::RectangleShape m_shield;
+		sf::RectangleShape m_chain;
 
 	private:
 		void movePlayer(const float delta);
@@ -23,6 +24,8 @@ namespace ld
 		void shieldMovement(const float delta);
 		void shieldRubberband(const float delta);
 		void shieldSlow(const float delta);
+
+		void chainMovement(const float delta);
 
 		sf::Vector2f m_direction;
 

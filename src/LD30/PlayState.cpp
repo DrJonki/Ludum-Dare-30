@@ -144,6 +144,14 @@ bool ld::PlayState::init()
 	m_player.m_shield.setSize(sf::Vector2f(128.f, 128.f));
 	m_player.m_shield.setOrigin(m_player.m_shield.getSize().x / 2, m_player.m_shield.getSize().y / 2);
 	m_player.m_shield.setPosition(m_player.getPosition() - m_player.getSize());
+
+	tex = ldResource.getTexture("assets/Graphics/Effects/electricity_chain_loop.png");
+	tex->setSmooth(true);
+	tex->setRepeated(true);
+	m_player.m_chain.setTexture(tex);
+	m_player.m_chain.setSize(sf::Vector2f(200, 200));
+	m_player.m_chain.setOrigin(m_player.m_chain.getSize().x / 2, 0);
+	m_player.m_chain.setPosition(m_player.getPosition());
 	
     tex = ldResource.getTexture("assets/Graphics/Backgrounds/background.png");
     tex->setSmooth(true);

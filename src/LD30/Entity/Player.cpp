@@ -50,12 +50,14 @@ void ld::Player::update(const float delta)
 {
 	movePlayer(delta);
 	shieldMovement(delta);
+	chainMovement(delta);
 }
 
 void ld::Player::draw()
 {
-	m_window->draw(*this);
+	m_window->draw(m_chain);
 	m_window->draw(m_shield);
+	m_window->draw(*this);
 }
 
 void ld::Player::movePlayer(const float delta)
@@ -146,6 +148,32 @@ void ld::Player::shieldSlow(const float delta)
 {
 	m_shieldDir -= normalize(m_shieldDir) * shieldFriction * delta;
 	m_shieldDir *= 1 - shieldDrag * delta;
+}
+
+
+void ld::Player::chainMovement(const float delta)
+{
+	sf::Vector2f posA = (*this).getPosition();
+	sf::Vector2f posB = m_shield.getPosition();
+	sf::Vector2f dif = posB - posA;
+	float angle = std::atan2(dif.y, dif.x) * 180.f / 3.14159265f + 90;
+	float magnitude = sqrt(dif.x*dif.x + dif.y*dif.y);
+
+	static float time = 0;
+	static int asdf = 1;
+
+	time += 1000 * delta * asdf;
+	/*if (abs(time) >= 100)
+		asdf *= -1;*/
+
+	m_chain.setTextureRect(sf::IntRect(0, static_cast<int>(time), 200, 400));
+
+	m_chain.setScale(sf::Vector2f(1.f/(magnitude/100.f),-magnitude / 200));
+	//m_chain.setOrigin(m_shield.getSize().x / 2, m_shield.getSize().y);
+	m_chain.setPosition(posA);
+
+	m_chain.setRotation(angle);
+
 }
 
 int ld::Player::getLives() const
