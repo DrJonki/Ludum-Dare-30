@@ -433,6 +433,9 @@ bool ifCollide(const sf::RectangleShape&, const sf::RectangleShape&);
 
 void ld::PlayState::collisionCheck()
 {
+    if (m_player.getLives() < 1)
+        return;
+
 	//for (auto &i : m_enemies)
 	for (std::size_t i = 0; i < m_enemies.size(); ++i)
 	{
