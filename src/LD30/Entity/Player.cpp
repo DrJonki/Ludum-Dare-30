@@ -64,6 +64,7 @@ void ld::Player::update(const float delta)
 	movePlayer(delta);
 	shieldMovement(delta);
 	chainMovement(delta);
+    cloudMovement(delta);
 }
 
 void ld::Player::draw()
@@ -71,6 +72,7 @@ void ld::Player::draw()
 	m_window->draw(m_chain);
 	m_window->draw(m_shield);
 	m_window->draw(*this);
+    m_window->draw(m_clouds);
 }
 
 void ld::Player::movePlayer(const float delta)
@@ -187,6 +189,12 @@ void ld::Player::chainMovement(const float delta)
 
 	m_chain.setRotation(angle);
 
+}
+
+void ld::Player::cloudMovement(const float delta)
+{
+    m_clouds.setPosition(this->getPosition());
+    m_clouds.rotate(10.f * delta);
 }
 
 int ld::Player::getLives() const

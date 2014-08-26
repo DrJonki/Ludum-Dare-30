@@ -17,6 +17,7 @@ namespace ld
 
 		sf::RectangleShape m_shield;
 		sf::RectangleShape m_chain;
+        sf::RectangleShape m_clouds;
 
 	private:
 		void movePlayer(const float delta);
@@ -26,6 +27,8 @@ namespace ld
 		void shieldSlow(const float delta);
 
 		void chainMovement(const float delta);
+
+        void cloudMovement(const float delta);
 
 		sf::Vector2f m_direction;
 

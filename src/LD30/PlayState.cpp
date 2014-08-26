@@ -152,6 +152,14 @@ bool ld::PlayState::init()
 	m_player.m_chain.setSize(sf::Vector2f(200, 200));
 	m_player.m_chain.setOrigin(m_player.m_chain.getSize().x / 2, 0);
 	m_player.m_chain.setPosition(m_player.getPosition());
+
+    tex = ldResource.getTexture("assets/Graphics/Player and shield planets/Player_Cloud.png");
+    tex->setSmooth(true);
+    m_player.m_clouds.setTexture(tex);
+    m_player.m_clouds.setSize(m_player.getSize());
+    m_player.m_clouds.setScale(m_player.getScale());
+    m_player.m_clouds.setOrigin(m_player.getSize() / 2.f);
+    m_player.m_clouds.setPosition(m_player.getPosition());
 	
     tex = ldResource.getTexture("assets/Graphics/Backgrounds/background.png");
     tex->setSmooth(true);
